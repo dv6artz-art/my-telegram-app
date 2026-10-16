@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Мастера Хошимина</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;--cream:#FBF3E4;--card:#FFFAF0;--terra:#C65D3B;--terra2:#A94A2B;--jade:#2F8F6B;--gold:#F2B01E;--ink:#3A2A22;--mute:#8C7767;--line:#EBDCC3;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--cream);color:var(--ink);font-family:Manrope,system-ui,sans-serif}
+body{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px));min-height:100vh}
+h1,h2,h3,.u{font-family:Unbounded,Manrope,sans-serif;font-weight:700;margin:0}
+.top{display:flex;align-items:center;gap:10px;padding:14px 16px 6px}
+.back{border:0;background:var(--card);border:1px solid var(--line);width:38px;height:38px;border-radius:12px;font-size:18px;color:var(--terra)}
+.brand{font-family:Unbounded;font-size:13px;color:var(--terra)}
+.wrap{padding:8px 16px 16px}
+h1{font-size:24px;line-height:1.2;margin:12px 0 18px}
+.big{display:block;width:100%;text-align:left;border:0;border-radius:24px;padding:26px 22px;margin-bottom:14px;color:#fff;font-family:Unbounded;font-size:20px;position:relative;overflow:hidden}
+.big small{display:block;font-family:Manrope;font-weight:600;font-size:14px;opacity:.9;margin-top:6px}
+.big .e{position:absolute;right:14px;bottom:4px;font-size:58px;opacity:.9}
+.b1{background:linear-gradient(135deg,var(--terra),#E08A4E)}.b2{background:linear-gradient(135deg,var(--jade),#52B08A)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cat{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px 12px;text-align:center;color:var(--ink);font:inherit}
+.cat .i{font-size:34px}.cat b{display:block;font-size:13px;margin:8px 0 6px;min-height:34px}
+.cat span{display:inline-block;background:#E4F2EB;color:var(--jade);font-weight:700;font-size:12px;border-radius:99px;padding:3px 10px}
+.cat.z{opacity:.45}
+.bar{position:sticky;top:0;background:var(--cream);z-index:5;padding:8px 16px;display:flex;align-items:center;gap:10px}
+.dots{flex:1;display:flex;gap:6px}.dots i{flex:1;height:5px;border-radius:9px;background:var(--line)}.dots i.on{background:var(--terra)}
+.cnt{font-family:Unbounded;font-size:12px;color:var(--terra)}
+.prof{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:20px 18px;text-align:center;touch-action:pan-y}
+.av{width:116px;height:116px;border-radius:50%;border:4px solid #fff;box-shadow:0 4px 14px #0002;margin:0 auto 10px;display:block}
+.nm{font-size:19px}
+.ver{display:inline-block;background:var(--jade);color:#fff;font-size:12px;font-weight:700;border-radius:99px;padding:3px 10px;margin-top:8px}
+.facts{display:flex;gap:8px;margin:16px 0}.fact{flex:1;background:var(--cream);border-radius:14px;padding:10px 4px}
+.fact b{display:block;font-size:14px}.fact span{font-size:11px;color:var(--mute)}
+.st{color:var(--gold);letter-spacing:1px}.mu{color:var(--mute)}
+.desc{text-align:left;line-height:1.5;font-size:14px;margin:6px 0 16px}
+.btn{display:block;width:100%;border:0;border-radius:16px;padding:14px;font:700 15px Manrope;margin-top:8px;color:#fff;background:var(--terra)}
+.btn.j{background:var(--jade)}.btn.o{background:none;color:var(--terra);border:2px solid var(--terra)}
+.rv{margin-top:20px}.rv h3{font-size:15px;margin-bottom:10px}
+.r{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin-bottom:10px;font-size:14px;line-height:1.45}
+.r .h{display:flex;justify-content:space-between;margin-bottom:4px}
+.nav{position:fixed;left:0;right:0;bottom:0;display:flex;gap:10px;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:var(--cream);border-top:1px solid var(--line);z-index:6}
+.nav .btn{margin:0}.nav .btn:disabled{opacity:.35}
+.sh{position:fixed;inset:0;background:#0006;z-index:20;display:flex;align-items:flex-end}
+.sh>div{background:var(--cream);width:100%;border-radius:24px 24px 0 0;padding:20px 16px calc(20px + env(safe-area-inset-bottom,0px));max-height:90vh;overflow:auto}
+.sh h3{margin-bottom:12px}
+input,textarea,select{width:100%;font:15px Manrope;padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff;margin-bottom:10px;color:var(--ink)}
+.stars button{border:0;background:none;font-size:34px;color:#D9CBB5;padding:0 2px}.stars button.on{color:var(--gold)}
+.toast{position:fixed;left:50%;top:16px;transform:translateX(-50%);background:var(--jade);color:#fff;padding:10px 18px;border-radius:99px;font-weight:700;z-index:30}
+.sec{font-size:14px;text-align:left;margin:16px 0 8px}
+.svc{display:flex;justify-content:space-between;width:100%;background:var(--cream);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:8px;font:600 14px Manrope;color:var(--ink);text-align:left}.svc b{color:var(--terra);white-space:nowrap;margin-left:8px}
+.wk{aspect-ratio:1;border-radius:18px;display:flex;align-items:center;justify-content:center;color:#fff;position:relative;overflow:hidden}
+.wk span{font-size:46px}.wk i{position:absolute;left:8px;bottom:6px;font:700 11px Manrope;font-style:normal;background:#0004;padding:2px 8px;border-radius:99px}
+.strip{display:flex;gap:10px;overflow-x:auto;padding-bottom:10px}.strip .wk{flex:0 0 120px}
+.wn{font-size:12px;margin:4px 2px 10px;line-height:1.3}.b3{background:linear-gradient(135deg,#D68A1F,#F2B01E)}
+.hero{background:linear-gradient(160deg,var(--terra),#E08A4E);color:#fff;border-radius:28px;padding:24px 20px;position:relative;overflow:hidden;margin-top:6px}
+.hero h1{font-size:23px;margin:0 0 10px;position:relative}.hero p{margin:0;font-size:14px;line-height:1.5;opacity:.95;position:relative}
+.hero .sun{position:absolute;right:-14px;top:-18px;font-size:92px;opacity:.35}
+.stats{display:flex;gap:10px;margin:14px 0 4px}.stats div{flex:1;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 4px;text-align:center}
+.stats b{display:block;font:700 20px Unbounded;color:var(--jade)}.stats span{font-size:11px;color:var(--mute)}
+.q{font-size:16px;margin:22px 0 12px}
+.how{display:flex;gap:8px}.how div{flex:1;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 8px;text-align:center;font-size:12px}
+.how i{display:block;width:26px;height:26px;line-height:26px;border-radius:50%;background:var(--jade);color:#fff;font:700 13px Unbounded;font-style:normal;margin:0 auto 6px}
+.how b{display:block;margin-bottom:2px}.how span{color:var(--mute)}.foot{text-align:center;font-size:12px;color:var(--mute);margin:16px 0 0}
+body{overflow-x:hidden}
+</style></head><body>
+<div id="app"></div>
+<script>
+const tg=window.Telegram&&window.Telegram.WebApp;
+if(tg){tg.ready();tg.expand();}
+const CATS=[["✂️","Стрижки и барберы"],["🍲","Домашняя еда"],["💅","Бьюти Услуги"],["🖋️","Тату и пирсинг"],["💆","Массаж"],["📸","Фото и видео"],["🧭","Гиды и помощь"],["🔧","Ремонт"],["📚","Репетиторы"]];
+const D={1:"District 1",2:"District 2",3:"District 3",7:"District 7",G:"Гранд Парк"};
+const RAW=[
+`Артём Волков|1|artem_barber_hcm|250|7|Классические стрижки и фейды, уход за бородой. Принимаю по записи.
+Максим Лис|2|maxlis_cuts|300|5|Барбершоп в Thao Dien: стрижки и бритьё опасной бритвой.
+Игорь Север|3|igor_sever_hair|200|9|Стрижки для мужчин и детей, возможен выезд на дом.
+Денис Ким|7|denis_kim7|280|6|Современные стрижки и окрашивание в Phu My Hung.
+Олег Руденко|G|oleg_gp_barber|220|4|Стригу в Гранд Парке, выезжаю в соседние башни.
+Влад Мороз|G|vlad_moroz_hcm|180|3|Быстрые аккуратные стрижки для взрослых и детей.`,
+`Ольга Кухарева|2|olga_dom_eda|120|8|Борщ, пельмени, домашние пироги. Доставка по Thao Dien.
+Татьяна Миронова|7|tanya_pelmeni7|100|6|Пельмени, вареники, голубцы — по предзаказу.
+Наталья Белова|1|natalia_kitchen1|150|5|Обеды на неделю: супы, котлеты, салаты.
+Елена Пирогова|3|lena_pirogi|90|10|Выпечка: пироги, ватрушки, торты на заказ.
+Марина Соль|G|marina_gp_food|110|4|Домашние обеды и ужины, доставка по Гранд Парку.
+Анна Лапина|G|anna_lapina_eat|130|3|Сырники, блины, завтраки и заготовки в дорогу.`,
+`Алина Рейн|2|alina_nails2|350|6|Маникюр, педикюр, гель-лак, дизайн. Стерильные инструменты.
+Кристина Лоу|1|kris_beauty1|400|5|Маникюр, брови и ресницы в студии в центре.
+Яна Орлова|7|yana_orlova_7|320|7|Аппаратный маникюр и наращивание в Phu My Hung.
+Диана Светлова|3|diana_svet3|300|4|Классический и японский маникюр, выезд на дом.
+Ева Громова|G|eva_gp_nails|280|3|Маникюр и педикюр в Гранд Парке, гель-лак.
+Лиза Ветрова|G|liza_brow_gp|250|5|Брови, ламинирование, окрашивание, ресницы.`,
+`Егор Чернов|1|egor_ink1|1500|8|Блэкворк и графика, эскиз бесплатно.
+Кирилл Рэй|2|kirill_ray_tattoo|1800|10|Реализм и портреты, по предварительной записи.
+Соня Вега|3|sonya_vega_ink|1200|5|Минимализм, леттеринг, тонкие линии.
+Артур Пирс|7|artur_pierce7|500|6|Пирсинг: уши, нос, губа. Титан, стерильно.
+Ника Стар|G|nika_star_gp|1000|4|Мини-тату и пирсинг в Гранд Парке.
+Глеб Тень|G|gleb_shadow_ink|1400|7|Графика и орнаменты, перекрытие старых работ.`,
+`Сергей Ладов|1|sergey_massage1|400|9|Классический и лечебный массаж спины и шеи.
+Ирина Нова|2|irina_nova_spa|450|7|Расслабляющий и антицеллюлитный массаж, массаж лица.
+Павел Крепс|3|pavel_kreps3|380|8|Спортивный массаж и мануальные техники.
+Галина Тёплая|7|galina_teplo7|350|11|Лечебный и детский массаж, выезд на дом.
+Вера Мягкова|G|vera_myagkova|300|5|Расслабляющий массаж с выездом в Гранд Парк.
+Руслан Дар|G|ruslan_dar_gp|320|6|Массаж спины, шеи и стоп, работаю и вечером.`,
+`Дмитрий Лучов|1|dmitry_luch_foto|1500|9|Портреты, лавстори, съёмка в городе.
+Катя Фокус|2|katya_focus|1800|6|Семейные и детские фотосессии в Thao Dien.
+Антон Кадр|3|anton_kadr_hcm|2000|8|Видео: рилс, ролики для бизнеса, монтаж.
+Лена Свет|7|lena_svet7|1400|5|Свадьбы и мероприятия, Phu My Hung.
+Макар Лента|G|makar_lenta_gp|1200|4|Фото и дрон в Гранд Парке, съёмка недвижимости.
+Полина Ракурс|G|polina_rakurs|1000|3|Портретная съёмка, контент для соцсетей.`,
+`Андрей Путёв|1|andrey_guide1|600|7|Экскурсии по городу, Кути, дельта Меконга.
+Светлана Мост|2|sveta_most_hcm|400|6|Помощь с визой, жильём и переводом документов.
+Виктор Компас|3|viktor_compass|500|8|Сопровождение на переговорах и в больнице.
+Юля Ориентир|7|yulia_orient7|450|5|Помощь с переездом: школы, сим-карты, аренда.
+Тимур Тропа|G|timur_tropa_gp|350|4|Сопровождение и перевод, помощь в Гранд Парке.
+Мила Друг|G|mila_drug_hcm|300|3|Помогу освоиться: транспорт, магазины, поликлиники.`,
+`Николай Мастеров|1|nikolay_master1|300|12|Сантехника, электрика, мелкий ремонт квартир.
+Борис Гвоздь|2|boris_gvozd|350|10|Ремонт под ключ, плитка, малярные работы.
+Фёдор Кондей|3|fedor_aircon3|400|7|Установка и чистка кондиционеров.
+Станислав Ток|7|stas_tok_7|320|9|Электрика, розетки, свет, умный дом.
+Руслан Болт|G|ruslan_bolt_gp|250|5|Мелкий ремонт в Гранд Парке, сборка мебели.
+Иван Дрель|G|ivan_drel_gp|270|6|Сборка мебели, навеска, сантехника.`,
+`Анна Мел|1|anna_mel_tutor|400|8|Математика и физика, подготовка к экзаменам.
+Дмитрий Школа|2|dmitry_school2|450|10|Английский для детей и взрослых, онлайн и офлайн.
+Ольга Азбука|3|olga_azbuka3|350|7|Русский язык и чтение для детей-билингвов.
+Максим Код|7|maxim_code7|500|6|Программирование на Python для школьников.
+Ксения Ноты|G|ksenia_noty_gp|380|5|Фортепиано и вокал, занятия в Гранд Парке.
+Наталья Вьет|G|natalia_viet_gp|420|6|Вьетнамский язык с нуля, разговорная практика.`];
+const RAW2=[`
+Тарас Бритва|G|taras_britva_gp|240|5|Мужские стрижки и фейды в Гранд Парке, оформление бороды.
+Семён Нож|G|semen_nozh_cuts|200|4|Стрижки под машинку и ножницами, быстро и аккуратно.
+Ярослав Фен|G|yaroslav_fen_gp|260|6|Стрижки, укладки, камуфляж седины, приём у дома.`,`
+Зоя Печкина|G|zoya_pechkina|100|7|Домашние котлеты, пюре, супы, готовлю на 2–4 порции.
+Галя Борщева|G|galya_borsch_gp|95|5|Борщи, щи, окрошка и домашние заготовки.
+Лариса Тесто|G|larisa_testo_gp|140|8|Торты и пироги на заказ, выпечка к праздникам.`,`
+Рита Глянец|G|rita_glyanets_gp|270|4|Маникюр с дизайном, френч, ремонт ногтей.
+Вика Блеск|G|vika_blesk_nails|300|6|Педикюр и маникюр, гель-лак, выезд на дом.
+Соня Пудра|G|sonya_pudra_gp|230|3|Депиляция, уход за кожей, бьюти-услуги дома.`,`
+Макс Игла|G|max_igla_tattoo|1100|5|Небольшие тату и перекрытия, консультация бесплатно.
+Лея Чернила|G|leya_ink_gp|900|4|Акварель и флористика, тонкие линии.
+Рэй Металл|G|ray_metal_pierce|450|6|Пирсинг ушей и носа, украшения из титана.`,`
+Никита Руки|G|nikita_ruki_gp|330|7|Спортивный массаж и разминка после тренировок.
+Тоня Покой|G|tonya_pokoy|310|5|Расслабляющий массаж ног и спины, вечером.
+Фаина Тепло|G|faina_teplo_gp|290|9|Лечебный массаж для взрослых и детей, выезд.`,`
+Рома Вспышка|G|roma_vspyshka|1100|5|Фото для маркетплейсов и соцсетей, предметная съёмка.
+Мира Кадр|G|mira_kadr_gp|1300|6|Семейные и детские фотосессии во дворе и парке.
+Глеб Дрон|G|gleb_dron_gp|1600|4|Съёмка с дрона, видео для застройщиков.`,`
+Вадим Маяк|G|vadim_mayak_gp|350|6|Сопровождение в госучреждениях и банках района.
+Лидия Карта|G|lidia_karta_gp|300|5|Покажу город, помогу с сим-картой и транспортом.
+Сава Мост|G|sava_most_gp|400|7|Переводчик на встречах, помощь с арендой жилья.`,`
+Артур Ключ|G|artur_klyuch_gp|240|8|Замена смесителей, розеток, мелкий ремонт.
+Гоша Шуруп|G|gosha_shurup_gp|260|5|Сборка мебели, навеска полок и телевизоров.
+Лёва Плитка|G|leva_plitka_gp|350|9|Укладка плитки, шпаклёвка, покраска стен.`,`
+Вера Логика|G|vera_logika_gp|350|7|Математика 5–9 классы, подготовка к контрольным.
+Тимофей Слово|G|timofey_slovo_gp|400|8|Английский и русский, занятия для детей.
+Зара Гитара|G|zara_gitara_gp|360|5|Гитара и укулеле для начинающих, Гранд Парк.`];
+const SV=["Стрижка:1,Стрижка + борода:1.6,Детская стрижка:.8,Стрижка машинкой:.7,Оформление бороды:.8,Королевское бритьё:1.4,Укладка:.6,Окрашивание:2","Обед на двоих:1.5,Набор выпечки:1,Заказ на неделю:5,Пельмени домашние (1 кг):1.2,Борщ с пампушками:.9,Торт на заказ:4,Пирожки (10 шт.):1.1,Обед на семью:2.5","Маникюр:1,Маникюр + покрытие:1.4,Педикюр:1.3,Снятие гель-лака:.5,Дизайн ногтей:.8,Наращивание:2,Оформление бровей:.9,Ламинирование ресниц:1.6","Эскиз:.3,Небольшая работа:1,Сеанс 3 часа:2.5,Консультация:.1,Мини-тату:.6,Перекрытие старой тату:2.5,Коррекция:.5,Прокол (без украшения):.4","Массаж 60 минут:1,Массаж 90 минут:1.5,Выезд на дом:1.3,Массаж спины:.6,Шея и плечи:.5,Массаж ног:.7,Антицеллюлитный:1.4,Спортивный массаж:1.2","Съёмка 1 час:1,Съёмка 2 часа:1.8,Видеоролик:2,Мини-съёмка 30 минут:.6,Свадьба (полдня):4,Предметная съёмка:.9,Монтаж ролика:1.3,Съёмка с дрона:1.5","Экскурсия 3 часа:1,Сопровождение на день:2,Консультация:.5,Помощь с документами:.8,Перевод на встрече:1,Сопровождение в больнице:1.2,Помощь с поиском жилья:1.5,Встреча в аэропорту:.7","Выезд и диагностика:.5,Мелкий ремонт:1,Работа на полдня:2,Замена смесителя:.7,Установка розетки:.4,Сборка мебели:.9,Покраска стен:2.5,Чистка кондиционера:.8","Урок 60 минут:1,Пробный урок:.6,Пакет 8 уроков:7,Урок 90 минут:1.4,Групповое занятие:.7,Подготовка к экзамену:1.3,Урок онлайн:.8,Помощь с домашним заданием:.6"];
+const svcs=m=>m.svc?m.svc.map(x=>[x.n,x.p]):SV[m.c].split(",").map(x=>{const[n,k]=x.split(":");return[n,Math.max(10000,Math.round(m.price*k/10000)*10000)]});
+const WK=["💈:Фейд,✂️:Классика,🧔:Борода,🪒:Бритьё","🍲:Борщ,🥟:Пельмени,🥧:Пирог,🍰:Торт","💅:Френч,✨:Дизайн,🌸:Весна,💖:Гель-лак","🐉:Графика,🌹:Роза,🦋:Мини-тату,💎:Пирсинг","🕯️:Релакс,🌿:Спа,💆:Спина,🧖:Лицо","🌅:Закат,💍:Свадьба,👪:Семья,🎞️:Ролик","🏯:Город,🛵:Кути,⛵:Меконг,🗺️:Маршрут","🚿:Сантехника,❄️:Кондиционер,🛠️:Сборка,💡:Свет","✏️:Математика,🎹:Фортепиано,🗣️:Язык,💻:Python"];
+const PAL=[["#C65D3B","#F2B01E"],["#2F8F6B","#9ED8B8"],["#A94A2B","#F0C9A0"],["#E08A4E","#C65D3B"],["#2F8F6B","#F2B01E"],["#6B8E5A","#E9C46A"]];
+const SK=["#F6D5B8","#EBC09A","#D9A27A","#C68B63","#F3CDB0"],HR=["#2B1B14","#4A2E1F","#7A4A2A","#B5651D","#1E1E1E","#C9A15B"],SH=["#C65D3B","#2F8F6B","#3A5A78","#E9B44C","#7A4E8C","#D9695F"];
+function av(m){const i=+m.k.split("-")[1],s=m.c*7+i*3,fn=m.n.split(" ")[0],f=/[ая]$/.test(fn)&&!/^(Рома|Гоша|Никита|Лёва|Сава)$/.test(fn),sk=SK[s%5],hr=HR[(s*2+1)%6],sh=SH[(s+i)%6],bg=PAL[(s+2)%6];
+ const lg=f?`<ellipse cx='50' cy='52' rx='26' ry='34' fill='${hr}'/>`:"";
+ const tp=f?`<path d='M27 44 Q30 18 50 18 Q70 18 73 44 Q60 30 50 30 Q40 30 27 44Z' fill='${hr}'/>`:`<path d='M30 40 Q28 16 50 16 Q72 16 70 40 Q66 28 50 27 Q34 28 30 40Z' fill='${hr}'/>`;
+ const bd=(!f&&s%3==0)?`<path d='M33 52 Q50 80 67 52 Q60 66 50 66 Q40 66 33 52Z' fill='${hr}' opacity='.85'/>`:"";
+ const svg=`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='${bg[0]}'/><stop offset='1' stop-color='${bg[1]}'/></linearGradient></defs><rect width='100' height='100' fill='url(#g)'/>${lg}<path d='M14 100 Q16 74 50 72 Q84 74 86 100Z' fill='${sh}'/><rect x='43' y='60' width='14' height='16' rx='6' fill='${sk}'/><ellipse cx='50' cy='46' rx='19' ry='22' fill='${sk}'/>${tp}${bd}<circle cx='43' cy='47' r='2.2' fill='#2B1B14'/><circle cx='57' cy='47' r='2.2' fill='#2B1B14'/><path d='M43 58 Q50 64 57 58' stroke='#8A3B2A' stroke-width='2' fill='none' stroke-linecap='round'/></svg>`;
+ return "data:image/svg+xml;utf8,"+encodeURIComponent(svg)}
+const works=m=>WK[m.c].split(",").map((x,j)=>{const[e,t]=x.split(":");return{e,t,c:PAL[(m.c+j+(+m.k.split("-")[1]))%6]}});
+const tile=w=>`<div class="wk" style="background:linear-gradient(135deg,${w.c[0]},${w.c[1]})"><span>${w.e}</span><i>${esc(w.t)}</i></div>`;
+function gallery(){const ar=S.area||"all";let h='<div class="wrap"><h1>Витрина работ</h1>';
+ CATS.forEach((c,ci)=>{const L=M.filter(m=>m.c===ci&&(ar==="all"||m.d==="G"));h+=`<h3 class="sec">${c[0]} ${c[1]}</h3><div class="grid">`+L.map(m=>{const w=works(m)[(+m.k.split("-")[1])%4];return `<div onclick="openM('${m.k}')">${tile(w)}<div class="wn"><b>${esc(m.n)}</b><br><span class="mu">${D[m.d]}</span></div></div>`}).join("")+`</div>`});return h+"</div>"}
+function openM(k){const m=M.find(x=>x.k===k);S.area=S.area||"all";S.cat=m.c;S.idx=list().indexOf(m);S.step=3;render();scrollTo(0,0)}
+const RT=["Всё очень понравилось, остался доволен результатом!","Пунктуально, аккуратно и по адресу. Рекомендую.","Отличный мастер, договорились быстро и без лишних слов.","Цена честная, качество выше ожиданий.","Приятно общаться, всё объяснил и сделал на совесть.","Уже обращаюсь не первый раз, всегда на высоте.","Хороший специалист, обязательно приду ещё.","Всё хорошо, но пришлось немного подождать.","Спасибо! Сделано быстро и аккуратно."];
+const RA=["Алексей","Мария","Дарья","Кирилл","Софья","Роман","Ирина","Павел","Екатерина","Антон"];
+const RR=[5,5,4,5,4,5,5,3];
+const M=[];
+RAW.forEach((b,c)=>(b+RAW2[c]).split("\n").forEach((l,i)=>{const[n,d,nick,p,e,ds]=l.split("|");
+ const rv=[];const cnt=2+((c+i)%2);
+ for(let k=0;k<cnt;k++){const s=c*10+i;rv.push({a:RA[(s+k*3)%10],r:RR[(s+k*2)%8],t:RT[(s*3+k*5)%9]})}
+ M.push({k:c+"-"+i,c,n,d,nick,price:p*1000,exp:+e,desc:ds,ver:(c*7+i)%3!=0,rv})}));
+const S={step:1,area:null,cat:null,idx:0,extra:[],pending:[]};
+/* ===== НАСТРОЙКИ ===== */
+const API="https://uliziyvbiyxiakkkvvti.supabase.co/functions/v1/api";      // адрес вашей функции: https://XXXX.supabase.co/functions/v1/api
+const SEED=true;   // true = показывать демо-мастеров из файла; false = только мастеров из базы
+/* ===================== */
+const tgData=()=>(tg&&tg.initData)||"";
+async function api(action,body){if(!API)return{error:"Сервер не подключён (см. инструкцию)"};
+ try{const r=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action,initData:tgData(),...body})});return await r.json()}catch(e){return{error:"Нет связи с сервером"}}}
+async function load(){const r=await api("list");if(r.error){render();return}
+ for(let i=M.length-1;i>=0;i--)if(M[i].db)M.splice(i,1);
+ r.masters.forEach(x=>M.push({k:"db-"+x.id,c:x.cat,n:x.name,d:x.district,nick:x.nick,price:(x.services[0]||{}).p||0,exp:x.exp,desc:x.descr,ver:x.verified,rv:[],svc:x.services,db:true}));
+ S.extra=r.reviews.map(x=>({id:x.id,m:x.master_key,a:x.name,r:x.rating,t:x.text}));S.me=r.me;S.pending=r.pending||[];render()}
+const $=s=>document.querySelector(s);
+const esc=t=>String(t).replace(/[&<>"]/g,x=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[x]));
+const fmt=n=>n.toLocaleString("ru-RU").replace(/\u00a0/g," ")+" ₫";
+const stars=r=>"★".repeat(Math.round(r))+"☆".repeat(5-Math.round(r));
+const COL=[["#C65D3B","#F2B01E"],["#2F8F6B","#F2B01E"],["#A94A2B","#E9C7A0"],["#2F8F6B","#C65D3B"]];
+function avOld(m){const n=m.n.split(" ").map(x=>x[0]).join(""),c=COL[(m.c+m.k.length+parseInt(m.k.split("-")[1]))%4];
+ const s=`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='${c[0]}'/><stop offset='1' stop-color='${c[1]}'/></linearGradient></defs><rect width='100' height='100' fill='url(#g)'/><text x='50' y='62' font-size='36' font-family='sans-serif' font-weight='700' fill='#fff' text-anchor='middle'>${n}</text></svg>`;
+ return "data:image/svg+xml;utf8,"+encodeURIComponent(s)}
+const revs=m=>m.rv.concat(S.extra.filter(x=>x.m===m.k));
+const avg=m=>{const r=revs(m);return r.reduce((a,x)=>a+x.r,0)/r.length};
+const list=()=>M.filter(m=>m.c===S.cat&&(S.area==="all"||m.d==="G"));
+let DB=null;
+async function initDB(){try{if(window.claude&&claude.use){DB=await claude.use("db")}}catch(e){DB=null}
+ try{if(DB){const s=await DB.collection("reviews").get();S.extra=s.docs.map(d=>d.data())}
+ else S.extra=JSON.parse(localStorage.getItem("rev")||"[]")}catch(e){}
+ render()}
+async function save(kind,obj){const id=Date.now()+"-"+Math.random().toString(36).slice(2,7);
+ try{if(DB){await DB.collection(kind).doc(id).set(obj);return}}catch(e){}
+ try{const a=JSON.parse(localStorage.getItem(kind)||"[]");a.push(obj);localStorage.setItem(kind,JSON.stringify(a))}catch(e){}}
+function toast(t){const e=document.createElement("div");e.className="toast";e.textContent=t;document.body.appendChild(e);setTimeout(()=>e.remove(),2200)}
+function go(st){S.step=st;if(st===3)S.idx=0;render();scrollTo(0,0)}
+function back(){if(S.step===4)go(1);else if(S.step>1)go(S.step-1)}
+function render(){
+ let h=`<div class="top">${S.step>1?'<button class="back" onclick="back()">←</button>':''}<span class="brand">☀ Мастера Хошимина</span></div>`;
+ if(S.step===1){const nv=M.filter(m=>m.ver).length;h+=`<div class="wrap">
+ <div class="hero"><div class="sun">☀️</div><h1>Мастера и услуги в Хошимине</h1>
+ <p>Барберы, бьюти-услуги, массаж, домашняя еда, ремонт, репетиторы и ещё 3 категории. Выбирайте мастера рядом с вами и договаривайтесь напрямую в Telegram.</p></div>
+ <div class="stats"><div><b>${M.length}</b><span>мастеров</span></div><div><b>${CATS.length}</b><span>категорий</span></div><div><b>${nv}</b><span>проверено</span></div></div>
+ <h2 class="q">Где вы находитесь?</h2>
+ <button class="big b1" onclick="S.area='all';go(2)">Весь Хошимин<small>District 1, 2, 3 и 7</small><span class="e">🏙️</span></button>
+ <button class="big b2" onclick="S.area='gp';go(2)">Гранд Парк<small>Vinhomes Grand Park</small><span class="e">🌳</span></button>
+ <h2 class="q">Как это работает</h2>
+ <div class="how"><div><i>1</i><b>Выберите район</b><span>и нужную услугу</span></div><div><i>2</i><b>Листайте анкеты</b><span>цены, опыт, отзывы</span></div><div><i>3</i><b>Напишите мастеру</b><span>или оставьте заявку</span></div></div>
+ <button class="btn o" onclick="sheet('apply')">Стать мастером: создать свою анкету</button>
+ ${S.me&&S.me.admin?`<button class="btn j" onclick="sheet('admin')">Админка: на проверке ${(S.pending||[]).length}</button>`:''}
+ <p class="foot">Отметка «✓ проверен» значит, что мы знакомы с мастером лично.</p></div>`}
+ else if(S.step===2){h+=`<div class="wrap"><h1>Какая услуга нужна?</h1><div class="grid">`+CATS.map((c,i)=>{const n=M.filter(m=>m.c===i&&(S.area==="all"||m.d==="G")).length;
+ return `<button class="cat ${n?'':'z'}" ${n?`onclick="S.cat=${i};go(3)"`:'disabled'}><div class="i">${c[0]}</div><b>${c[1]}</b><span>${n} мастеров</span></button>`}).join("")+`</div></div>`}
+ else if(S.step===4){h+=gallery()} else{const L=list(),m=L[S.idx],r=revs(m),a=avg(m);
+ h+=`<div class="bar"><div class="dots">${L.map((_,i)=>`<i class="${i===S.idx?'on':''}"></i>`).join("")}</div><span class="cnt">${S.idx+1} / ${L.length}</span></div>
+ <div class="wrap"><div class="prof" id="prof"><img class="av" src="${av(m)}" alt="">
+ <h2 class="nm">${esc(m.n)}</h2>${m.ver?'<span class="ver">✓ проверен</span>':''}
+ <div class="mu" style="margin-top:8px;font-size:13px">${CATS[m.c][0]} ${CATS[m.c][1]} · 📍 ${D[m.d]}</div>
+ <div class="facts"><div class="fact"><b>${m.exp} лет</b><span>опыт</span></div><div class="fact"><b><span class="st">★</span> ${a.toFixed(1)}</b><span>${r.length} отзывов</span></div></div>
+ <p class="desc">${esc(m.desc)}</p>
+ <h3 class="sec">Услуги</h3>${svcs(m).map((x,i)=>`<div class="svc"><span>${x[0]}</span><b>${fmt(x[1])}</b></div>`).join("")}
+ <h3 class="sec">Работы</h3><div class="strip">${works(m).map(tile).join("")}</div><div style="height:10px"></div>
+ <button class="btn" onclick="openTg('${m.nick}')">Написать в Telegram</button>
+ ${S.me&&S.me.admin&&m.db?`<button class="btn o" onclick="mod(${m.k.slice(3)},'verify')">Отметить «проверен»</button><button class="btn o" onclick="mod(${m.k.slice(3)},'delete')">Удалить анкету</button>`:''}
+ </div>
+ <div class="rv"><h3>Отзывы</h3>${r.map(x=>`<div class="r"><div class="h"><b>${esc(x.a)}${S.me&&S.me.admin&&x.id?` <a onclick="delRev(${x.id})" style="color:var(--terra)">✕</a>`:''}</b><span class="st">${stars(x.r)}</span></div>${esc(x.t)}</div>`).join("")}
+ <button class="btn o" onclick="sheet('rev')">Оставить отзыв</button></div></div>
+ <div class="nav"><button class="btn o" ${S.idx===0?'disabled':''} onclick="mv(-1)">← Назад</button><button class="btn" ${S.idx===L.length-1?'disabled':''} onclick="mv(1)">Вперёд →</button></div>`}
+ $("#app").innerHTML=h;
+ const p=$("#prof");if(p){const LN=list().length;let x0=0,y0=0,dx=0,lock=0,on=false;
+ p.ontouchstart=e=>{if(e.target.closest(".strip"))return;on=true;lock=0;dx=0;x0=e.touches[0].clientX;y0=e.touches[0].clientY;p.style.transition="none"};
+ p.ontouchmove=e=>{if(!on)return;dx=e.touches[0].clientX-x0;const dy=e.touches[0].clientY-y0;
+  if(!lock){if(Math.abs(dx)>8&&Math.abs(dx)>Math.abs(dy))lock=1;else if(Math.abs(dy)>8)lock=2}
+  if(lock!==1)return;
+  const edge=(S.idx===0&&dx>0)||(S.idx===LN-1&&dx<0),d=edge?dx*.25:dx;
+  p.style.transform=`translateX(${d}px) rotate(${d/25}deg)`;p.style.opacity=1-Math.min(Math.abs(d)/500,.4)};
+ p.ontouchend=()=>{if(!on)return;on=false;if(lock!==1)return;
+  const dir=dx<0?1:-1,ok=Math.abs(dx)>80&&S.idx+dir>=0&&S.idx+dir<LN;
+  p.style.transition="transform .25s ease,opacity .25s ease";
+  if(!ok){p.style.transform="";p.style.opacity="";return}
+  p.style.transform=`translateX(${-dir*innerWidth}px) rotate(${-dir*18}deg)`;p.style.opacity=0;
+  setTimeout(()=>{S.idx+=dir;render();scrollTo(0,0);const q=$("#prof");if(q){q.style.transition="none";q.style.transform=`translateX(${dir*innerWidth*.4}px)`;q.style.opacity=0;q.offsetWidth;q.style.transition="transform .28s ease,opacity .28s ease";q.style.transform="";q.style.opacity=""}},230)}}}
+function mv(d){const n=list().length,i=S.idx+d;if(i<0||i>=n)return;S.idx=i;render();scrollTo(0,0)}
+function openTg(n){const u="https://t.me/"+n;if(tg&&tg.openTelegramLink)tg.openTelegramLink(u);else window.open(u,"_blank")}
+let rate=5;
+function sheet(t,si){if(t==="apply"||t==="admin")return sheet2(t);const m=list()[S.idx];const e=document.createElement("div");e.className="sh";e.id="sh";
+ e.onclick=ev=>{if(ev.target===e)e.remove()};
+ if(t==="rev"){rate=5;e.innerHTML=`<div><h3>Отзыв о мастере</h3>${API?'':'<input id="fa" placeholder="Ваше имя">'}<div class="stars" id="stars">${[1,2,3,4,5].map(i=>`<button class="on" data-i="${i}">★</button>`).join("")}</div><textarea id="ft" rows="3" placeholder="Что вам понравилось?"></textarea><button class="btn" id="go">Отправить отзыв</button></div>`;
+  document.body.appendChild(e);
+  e.querySelectorAll("#stars button").forEach(b=>b.onclick=()=>{rate=+b.dataset.i;e.querySelectorAll("#stars button").forEach(x=>x.classList.toggle("on",+x.dataset.i<=rate))});
+  $("#go").onclick=async()=>{const tx=$("#ft").value.trim();if(tx.length<3)return toast("Напишите отзыв");
+   if(API){const r=await api("review",{master_key:m.k,rating:rate,text:tx});if(r.error)return toast(r.error);await load()}
+   else S.extra.push({m:m.k,a:"Гость",r:rate,t:tx});
+   e.remove();render();toast("Спасибо за отзыв!")}}
+ else{e.innerHTML=`<div><h3>Заявка: ${esc(m.n)}</h3><input id="fn" placeholder="Ваше имя"><input id="ft2" placeholder="Ваш Telegram (@ник)"><input id="fd" type="date"><textarea id="fm" rows="3" placeholder="Сообщение мастеру">${si!=null?"Хочу записаться: "+esc(svcs(m)[si][0]):""}</textarea><button class="btn j" id="go">Отправить заявку</button></div>`;
+  document.body.appendChild(e);
+  $("#go").onclick=async()=>{const n=$("#fn").value.trim(),t=$("#ft2").value.trim(),d=$("#fd").value;if(!n||!t||!d)return toast("Укажите имя, Telegram и дату");
+   await save("requests",{m:m.k,master:m.n,name:n,tg:t,date:d,msg:$("#fm").value.trim()});e.remove();toast("Заявка отправлена!")}}}
+function sheet2(t){const e=document.createElement("div");e.className="sh";e.onclick=ev=>{if(ev.target===e)e.remove()};
+ if(t==="apply"){const un=(tg&&tg.initDataUnsafe&&tg.initDataUnsafe.user&&tg.initDataUnsafe.user.username)||"";
+  e.innerHTML=`<div><h3>Анкета мастера</h3><input id="an" placeholder="Имя"><select id="ac">${CATS.map((c,i)=>`<option value="${i}">${c[0]} ${c[1]}</option>`).join("")}</select><select id="ad">${Object.keys(D).map(k=>`<option value="${k}">${D[k]}</option>`).join("")}</select><input id="at" placeholder="Telegram-ник" value="${esc(un)}"><input id="ae" type="number" placeholder="Опыт, лет"><textarea id="ax" rows="3" placeholder="О себе"></textarea><textarea id="as" rows="5" placeholder="Услуги, по одной в строке:&#10;Стрижка — 250000&#10;Стрижка + борода — 400000"></textarea><button class="btn" id="go">Отправить на проверку</button></div>`;
+  document.body.appendChild(e);
+  $("#go").onclick=async()=>{const sv=$("#as").value.split("\n").map(l=>{const x=l.trim().match(/^(.+?)[\s:—–-]+(\d[\d\s.,]*)$/);if(!x)return null;let p=+x[2].replace(/\D/g,"");if(p<5000)p*=1000;return{n:x[1].trim(),p}}).filter(Boolean);
+   if(!$("#an").value.trim()||!$("#at").value.trim()||!sv.length)return toast("Нужны имя, ник и хотя бы одна услуга");
+   const r=await api("apply",{master:{name:$("#an").value.trim(),cat:$("#ac").value,district:$("#ad").value,nick:$("#at").value.trim(),exp:$("#ae").value,descr:$("#ax").value.trim(),services:sv}});
+   if(r.error)return toast(r.error);e.remove();if(r.status==="approved")await load();toast(r.status==="approved"?"Анкета опубликована":"Отправлено на проверку")}}
+ else{e.innerHTML=`<div><h3>На проверке: ${(S.pending||[]).length}</h3>${(S.pending||[]).map(x=>`<div class="r"><b>${esc(x.name)}</b> · ${CATS[x.cat][1]} · ${D[x.district]}<br>@${esc(x.nick)}<br>${esc(x.descr)}<div style="display:flex;gap:8px"><button class="btn j" onclick="mod(${x.id},'approve')">Одобрить</button><button class="btn o" onclick="mod(${x.id},'reject')">Отклонить</button></div></div>`).join("")||"<p class=mu>Новых анкет нет</p>"}</div>`;document.body.appendChild(e)}}
+async function mod(id,op){if(op==="delete"&&!confirm("Удалить анкету?"))return;const r=await api("moderate",{id,op});if(r.error)return toast(r.error);document.querySelectorAll(".sh").forEach(x=>x.remove());if(op==="delete")S.step=2;await load();toast("Готово")}
+async function delRev(id){if(!confirm("Удалить отзыв?"))return;const r=await api("delete_review",{id});if(r.error)return toast(r.error);await load();toast("Удалён")}
+if(!SEED)M.length=0;render();API?load():initDB();
+</script></body></html>
