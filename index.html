@@ -190,7 +190,7 @@ async function api(action,body){if(!API)return{error:"Сервер не подк
 async function load(){const r=await api("list");if(r.error){render();return}
  for(let i=M.length-1;i>=0;i--)if(M[i].db)M.splice(i,1);
  r.masters.forEach(x=>M.push({k:"db-"+x.id,c:x.cat,n:x.name,d:x.district,nick:x.nick,price:(x.services[0]||{}).p||0,exp:x.exp,desc:x.descr,ver:x.verified,rv:[],svc:x.services,db:true,ph:x.photos||[],avimg:x.avatar}));
- S.extra=r.reviews.map(x=>({id:x.id,m:x.master_key,a:x.name,r:x.rating,t:x.text}));S.me=r.me;S.pending=r.pending||[];render()}
+ S.extra=r.reviews.map(x=>({id:x.id,m:x.master_key,a:x.name,r:x.rating,t:x.text}));S.me=r.me;S.pending=r.pending||[];S.mine=r.mine||[];render()}
 const $=s=>document.querySelector(s);
 const esc=t=>String(t).replace(/[&<>"]/g,x=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[x]));
 const fmt=n=>n.toLocaleString("ru-RU").replace(/\u00a0/g," ")+" ₫";
@@ -224,7 +224,8 @@ function render(){
  <button class="big b2" onclick="S.area='gp';go(2)">Гранд Парк<small>Vinhomes Grand Park</small><span class="e">🌳</span></button>
  <h2 class="q">Как это работает</h2>
  <div class="how"><div><i>1</i><b>Выберите район</b><span>и нужную услугу</span></div><div><i>2</i><b>Листайте анкеты</b><span>цены, опыт, отзывы</span></div><div><i>3</i><b>Напишите мастеру</b><span>или оставьте заявку</span></div></div>
- <button class="btn o" onclick="sheet('apply')">Стать мастером: создать свою анкету</button>
+ ${(S.mine||[]).map(x=>`<button class="btn j" onclick="sheet('edit',${x.id})">Моя анкета: ${esc(x.name)}${x.status==="pending"?" (на проверке)":""}</button>`).join("")}
+ ${(S.mine||[]).length&&!(S.me&&S.me.admin)?'':`<button class="btn o" onclick="sheet('apply')">Стать мастером: создать свою анкету</button>`}
  ${S.me&&S.me.admin?`<button class="btn j" onclick="sheet('admin')">Админка: на проверке ${(S.pending||[]).length}</button>`:''}
  <p class="foot">Отметка «✓ проверен» значит, что мы знакомы с мастером лично.</p></div>`}
  else if(S.step===2){h+=`<div class="wrap"><h1>Какая услуга нужна?</h1><div class="grid">`+CATS.map((c,i)=>{const n=M.filter(m=>m.c===i&&(S.area==="all"||m.d==="G")).length;
@@ -261,7 +262,7 @@ function render(){
 function mv(d){const n=list().length,i=S.idx+d;if(i<0||i>=n)return;S.idx=i;render();scrollTo(0,0)}
 function openTg(n){const u="https://t.me/"+n;if(tg&&tg.openTelegramLink)tg.openTelegramLink(u);else window.open(u,"_blank")}
 let rate=5;
-function sheet(t,si){if(t==="apply"||t==="admin")return sheet2(t);const m=list()[S.idx];const e=document.createElement("div");e.className="sh";e.id="sh";
+function sheet(t,si){if(t==="apply"||t==="admin"||t==="edit")return sheet2(t,si);const m=list()[S.idx];const e=document.createElement("div");e.className="sh";e.id="sh";
  e.onclick=ev=>{if(ev.target===e)e.remove()};
  if(t==="rev"){rate=5;e.innerHTML=`<div><h3>Отзыв о мастере</h3>${API?'':'<input id="fa" placeholder="Ваше имя">'}<div class="stars" id="stars">${[1,2,3,4,5].map(i=>`<button class="on" data-i="${i}">★</button>`).join("")}</div><textarea id="ft" rows="3" placeholder="Что вам понравилось?"></textarea><button class="btn" id="go">Отправить отзыв</button></div>`;
   document.body.appendChild(e);
@@ -274,7 +275,7 @@ function sheet(t,si){if(t==="apply"||t==="admin")return sheet2(t);const m=list()
   document.body.appendChild(e);
   $("#go").onclick=async()=>{const n=$("#fn").value.trim(),t=$("#ft2").value.trim(),d=$("#fd").value;if(!n||!t||!d)return toast("Укажите имя, Telegram и дату");
    await save("requests",{m:m.k,master:m.n,name:n,tg:t,date:d,msg:$("#fm").value.trim()});e.remove();toast("Заявка отправлена!")}}}
-function sheet2(t){const e=document.createElement("div");e.className="sh";e.onclick=ev=>{if(ev.target===e)e.remove()};
+function sheet2(t,id){const e=document.createElement("div");e.className="sh";e.onclick=ev=>{if(ev.target===e)e.remove()};
  if(t==="apply"){const un=(tg&&tg.initDataUnsafe&&tg.initDataUnsafe.user&&tg.initDataUnsafe.user.username)||"";
   e.innerHTML=`<div><h3>Анкета мастера</h3><input id="an" placeholder="Имя"><select id="ac">${CATS.map((c,i)=>`<option value="${i}">${c[0]} ${c[1]}</option>`).join("")}</select><select id="ad">${Object.keys(D).map(k=>`<option value="${k}">${D[k]}</option>`).join("")}</select><input id="at" placeholder="Telegram-ник" value="${esc(un)}"><input id="ae" type="number" placeholder="Опыт, лет"><textarea id="ax" rows="3" placeholder="О себе"></textarea><textarea id="as" rows="5" placeholder="Услуги, по одной в строке:&#10;Стрижка — 250000&#10;Стрижка + борода — 400000"></textarea><label class="lb">Ваше фото</label><input id="aa" type="file" accept="image/*"><label class="lb">Фото работ (до 6)</label><input id="aw" type="file" accept="image/*" multiple><button class="btn" id="go">Отправить на проверку</button></div>`;
   document.body.appendChild(e);
@@ -282,9 +283,32 @@ function sheet2(t){const e=document.createElement("div");e.className="sh";e.oncl
    if(!$("#an").value.trim()||!$("#at").value.trim()||!sv.length)return toast("Нужны имя, ник и хотя бы одна услуга");
    toast("Загружаем фото…");const avf=$("#aa").files[0],avd=avf?await shrink(avf,400):null,phd=(await Promise.all([...$("#aw").files].slice(0,6).map(f=>shrink(f)))).filter(Boolean);const r=await api("apply",{master:{avatar:avd,photos:phd,name:$("#an").value.trim(),cat:$("#ac").value,district:$("#ad").value,nick:$("#at").value.trim(),exp:$("#ae").value,descr:$("#ax").value.trim(),services:sv}});
    if(r.error)return toast(r.error);e.remove();if(r.status==="approved")await load();toast(r.status==="approved"?"Анкета опубликована":"Отправлено на проверку")}}
+ else if(t==="edit"){const x=S.mine.find(z=>z.id==id);if(!x)return;let keep=[...(x.photos||[])],clr=false;
+  const opt=(o,sel)=>Object.keys(o).map(k=>`<option value="${k}" ${String(k)===String(sel)?"selected":""}>${o[k]}</option>`).join("");
+  e.innerHTML=`<div><h3>Моя анкета</h3>${x.status==="pending"?'<p class="mu" style="font-size:13px">Анкета ещё на проверке у администратора</p>':''}
+  <label class="lb">Имя</label><input id="en" value="${esc(x.name)}">
+  <label class="lb">Категория</label><select id="ecat">${opt(CATS.map(c=>c[0]+" "+c[1]),x.cat)}</select>
+  <label class="lb">Район</label><select id="edis">${opt(D,x.district)}</select>
+  <label class="lb">Telegram-ник</label><input id="et" value="${esc(x.nick)}">
+  <label class="lb">Опыт, лет</label><input id="ee" type="number" value="${x.exp||0}">
+  <label class="lb">О себе</label><textarea id="ex" rows="3">${esc(x.descr||"")}</textarea>
+  <label class="lb">Услуги: по одной в строке, «название — цена»</label><textarea id="es" rows="8">${(x.services||[]).map(s=>esc(s.n)+" — "+s.p).join("\n")}</textarea>
+  <label class="lb">Аватарка</label>${x.avatar?`<img src="${x.avatar}" style="width:72px;height:72px;border-radius:50%;object-fit:cover;display:block;margin-bottom:8px">`:''}
+  <input id="ea" type="file" accept="image/*">${x.avatar?'<button class="btn o" id="ecl" style="margin:0 0 10px">Удалить аватарку</button>':''}
+  <label class="lb">Фото работ (до 6)</label><div id="ek" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px"></div>
+  <input id="ew" type="file" accept="image/*" multiple><button class="btn" id="go">Сохранить</button></div>`;
+  document.body.appendChild(e);
+  const draw=()=>{$("#ek").innerHTML=keep.map((u,i)=>`<div style="position:relative"><img src="${u}" style="width:72px;height:72px;object-fit:cover;border-radius:10px"><a data-i="${i}" style="position:absolute;top:-6px;right:-6px;background:var(--terra);color:#fff;border-radius:50%;width:22px;height:22px;line-height:22px;text-align:center;font-weight:700">✕</a></div>`).join("")||'<span class="mu" style="font-size:13px">Фото пока нет</span>'};draw();
+  $("#ek").onclick=ev=>{const i=ev.target.dataset.i;if(i!=null){keep.splice(+i,1);draw()}};
+  const cb=$("#ecl");if(cb)cb.onclick=()=>{clr=true;cb.textContent="Аватарка будет удалена"};
+  $("#go").onclick=async()=>{const sv=parseSv($("#es").value);if(!$("#en").value.trim()||!$("#et").value.trim()||!sv.length)return toast("Нужны имя, ник и хотя бы одна услуга");
+   toast("Сохраняем…");const af=$("#ea").files[0],ad=af?await shrink(af,400):null,pd=(await Promise.all([...$("#ew").files].slice(0,Math.max(0,6-keep.length)).map(f=>shrink(f)))).filter(Boolean);
+   const r=await api("update",{id:x.id,master:{name:$("#en").value.trim(),cat:$("#ecat").value,district:$("#edis").value,nick:$("#et").value.trim(),exp:$("#ee").value,descr:$("#ex").value.trim(),services:sv,keep,photos:pd,avatar:ad,avatarClear:clr}});
+   if(r.error)return toast(r.error);e.remove();S.step=1;await load();toast("Сохранено")}}
  else{e.innerHTML=`<div><h3>На проверке: ${(S.pending||[]).length}</h3>${(S.pending||[]).map(x=>`<div class="r"><b>${esc(x.name)}</b> · ${CATS[x.cat][1]} · ${D[x.district]}<br>@${esc(x.nick)}<br>${esc(x.descr)}<br>${(x.photos||[]).map(u=>`<img src="${u}" style="width:60px;height:60px;object-fit:cover;border-radius:8px;margin:4px 4px 0 0">`).join("")}<div style="display:flex;gap:8px"><button class="btn j" onclick="mod(${x.id},'approve')">Одобрить</button><button class="btn o" onclick="mod(${x.id},'reject')">Отклонить</button></div></div>`).join("")||"<p class=mu>Новых анкет нет</p>"}</div>`;document.body.appendChild(e)}}
 async function mod(id,op){if(op==="delete"&&!confirm("Удалить анкету?"))return;const r=await api("moderate",{id,op});if(r.error)return toast(r.error);document.querySelectorAll(".sh").forEach(x=>x.remove());if(op==="delete")S.step=2;await load();toast("Готово")}
 async function delRev(id){if(!confirm("Удалить отзыв?"))return;const r=await api("delete_review",{id});if(r.error)return toast(r.error);await load();toast("Удалён")}
+function parseSv(t){return t.split("\n").map(l=>{const x=l.trim().match(/^(.+?)[\s:—–-]+(\d[\d\s.,]*)$/);if(!x)return null;let p=+x[2].replace(/\D/g,"");if(p<5000)p*=1000;return{n:x[1].trim(),p}}).filter(Boolean)}
 function shrink(f,max=900){return new Promise(res=>{const r=new FileReader();r.onload=()=>{const i=new Image();i.onload=()=>{const k=Math.min(1,max/Math.max(i.width,i.height)),c=document.createElement("canvas");c.width=i.width*k;c.height=i.height*k;c.getContext("2d").drawImage(i,0,0,c.width,c.height);res(c.toDataURL("image/jpeg",.8))};i.onerror=()=>res(null);i.src=r.result};r.onerror=()=>res(null);r.readAsDataURL(f)})}
 function zoom(u){const e=document.createElement("div");e.className="sh";e.style.cssText="align-items:center;background:#000d";e.onclick=()=>e.remove();e.innerHTML=`<img src="${u}" style="width:100%;max-height:90vh;object-fit:contain">`;document.body.appendChild(e)}
 if(!SEED)M.length=0;render();API?load():initDB();
