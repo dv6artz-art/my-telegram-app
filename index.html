@@ -64,6 +64,7 @@ input,textarea,select{width:100%;font:15px Manrope;padding:12px;border:1px solid
 .how i{display:block;width:26px;height:26px;line-height:26px;border-radius:50%;background:var(--jade);color:#fff;font:700 13px Unbounded;font-style:normal;margin:0 auto 6px}
 .how b{display:block;margin-bottom:2px}.how span{color:var(--mute)}.foot{text-align:center;font-size:12px;color:var(--mute);margin:16px 0 0}
 body{overflow-x:hidden}
+.lb{display:block;font-size:12px;color:var(--mute);margin:2px 2px 4px}
 </style></head><body>
 <div id="app"></div>
 <script>
@@ -159,14 +160,14 @@ const svcs=m=>m.svc?m.svc.map(x=>[x.n,x.p]):SV[m.c].split(",").map(x=>{const[n,k
 const WK=["💈:Фейд,✂️:Классика,🧔:Борода,🪒:Бритьё","🍲:Борщ,🥟:Пельмени,🥧:Пирог,🍰:Торт","💅:Френч,✨:Дизайн,🌸:Весна,💖:Гель-лак","🐉:Графика,🌹:Роза,🦋:Мини-тату,💎:Пирсинг","🕯️:Релакс,🌿:Спа,💆:Спина,🧖:Лицо","🌅:Закат,💍:Свадьба,👪:Семья,🎞️:Ролик","🏯:Город,🛵:Кути,⛵:Меконг,🗺️:Маршрут","🚿:Сантехника,❄️:Кондиционер,🛠️:Сборка,💡:Свет","✏️:Математика,🎹:Фортепиано,🗣️:Язык,💻:Python"];
 const PAL=[["#C65D3B","#F2B01E"],["#2F8F6B","#9ED8B8"],["#A94A2B","#F0C9A0"],["#E08A4E","#C65D3B"],["#2F8F6B","#F2B01E"],["#6B8E5A","#E9C46A"]];
 const SK=["#F6D5B8","#EBC09A","#D9A27A","#C68B63","#F3CDB0"],HR=["#2B1B14","#4A2E1F","#7A4A2A","#B5651D","#1E1E1E","#C9A15B"],SH=["#C65D3B","#2F8F6B","#3A5A78","#E9B44C","#7A4E8C","#D9695F"];
-function av(m){const i=+m.k.split("-")[1],s=m.c*7+i*3,fn=m.n.split(" ")[0],f=/[ая]$/.test(fn)&&!/^(Рома|Гоша|Никита|Лёва|Сава)$/.test(fn),sk=SK[s%5],hr=HR[(s*2+1)%6],sh=SH[(s+i)%6],bg=PAL[(s+2)%6];
+function av(m){if(m.avimg)return m.avimg;const i=+m.k.split("-")[1],s=m.c*7+i*3,fn=m.n.split(" ")[0],f=/[ая]$/.test(fn)&&!/^(Рома|Гоша|Никита|Лёва|Сава)$/.test(fn),sk=SK[s%5],hr=HR[(s*2+1)%6],sh=SH[(s+i)%6],bg=PAL[(s+2)%6];
  const lg=f?`<ellipse cx='50' cy='52' rx='26' ry='34' fill='${hr}'/>`:"";
  const tp=f?`<path d='M27 44 Q30 18 50 18 Q70 18 73 44 Q60 30 50 30 Q40 30 27 44Z' fill='${hr}'/>`:`<path d='M30 40 Q28 16 50 16 Q72 16 70 40 Q66 28 50 27 Q34 28 30 40Z' fill='${hr}'/>`;
  const bd=(!f&&s%3==0)?`<path d='M33 52 Q50 80 67 52 Q60 66 50 66 Q40 66 33 52Z' fill='${hr}' opacity='.85'/>`:"";
  const svg=`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='${bg[0]}'/><stop offset='1' stop-color='${bg[1]}'/></linearGradient></defs><rect width='100' height='100' fill='url(#g)'/>${lg}<path d='M14 100 Q16 74 50 72 Q84 74 86 100Z' fill='${sh}'/><rect x='43' y='60' width='14' height='16' rx='6' fill='${sk}'/><ellipse cx='50' cy='46' rx='19' ry='22' fill='${sk}'/>${tp}${bd}<circle cx='43' cy='47' r='2.2' fill='#2B1B14'/><circle cx='57' cy='47' r='2.2' fill='#2B1B14'/><path d='M43 58 Q50 64 57 58' stroke='#8A3B2A' stroke-width='2' fill='none' stroke-linecap='round'/></svg>`;
  return "data:image/svg+xml;utf8,"+encodeURIComponent(svg)}
-const works=m=>WK[m.c].split(",").map((x,j)=>{const[e,t]=x.split(":");return{e,t,c:PAL[(m.c+j+(+m.k.split("-")[1]))%6]}});
-const tile=w=>`<div class="wk" style="background:linear-gradient(135deg,${w.c[0]},${w.c[1]})"><span>${w.e}</span><i>${esc(w.t)}</i></div>`;
+const works=m=>m.ph&&m.ph.length?m.ph.map(u=>({img:u})):WK[m.c].split(",").map((x,j)=>{const[e,t]=x.split(":");return{e,t,c:PAL[(m.c+j+(+m.k.split("-")[1]))%6]}});
+const tile=w=>w.img?`<div class="wk" onclick="zoom('${w.img}')" style="background:#eee url('${w.img}') center/cover"></div>`:`<div class="wk" style="background:linear-gradient(135deg,${w.c[0]},${w.c[1]})"><span>${w.e}</span><i>${esc(w.t)}</i></div>`;
 function gallery(){const ar=S.area||"all";let h='<div class="wrap"><h1>Витрина работ</h1>';
  CATS.forEach((c,ci)=>{const L=M.filter(m=>m.c===ci&&(ar==="all"||m.d==="G"));h+=`<h3 class="sec">${c[0]} ${c[1]}</h3><div class="grid">`+L.map(m=>{const w=works(m)[(+m.k.split("-")[1])%4];return `<div onclick="openM('${m.k}')">${tile(w)}<div class="wn"><b>${esc(m.n)}</b><br><span class="mu">${D[m.d]}</span></div></div>`}).join("")+`</div>`});return h+"</div>"}
 function openM(k){const m=M.find(x=>x.k===k);S.area=S.area||"all";S.cat=m.c;S.idx=list().indexOf(m);S.step=3;render();scrollTo(0,0)}
@@ -188,7 +189,7 @@ async function api(action,body){if(!API)return{error:"Сервер не подк
  try{const r=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action,initData:tgData(),...body})});return await r.json()}catch(e){return{error:"Нет связи с сервером"}}}
 async function load(){const r=await api("list");if(r.error){render();return}
  for(let i=M.length-1;i>=0;i--)if(M[i].db)M.splice(i,1);
- r.masters.forEach(x=>M.push({k:"db-"+x.id,c:x.cat,n:x.name,d:x.district,nick:x.nick,price:(x.services[0]||{}).p||0,exp:x.exp,desc:x.descr,ver:x.verified,rv:[],svc:x.services,db:true}));
+ r.masters.forEach(x=>M.push({k:"db-"+x.id,c:x.cat,n:x.name,d:x.district,nick:x.nick,price:(x.services[0]||{}).p||0,exp:x.exp,desc:x.descr,ver:x.verified,rv:[],svc:x.services,db:true,ph:x.photos||[],avimg:x.avatar}));
  S.extra=r.reviews.map(x=>({id:x.id,m:x.master_key,a:x.name,r:x.rating,t:x.text}));S.me=r.me;S.pending=r.pending||[];render()}
 const $=s=>document.querySelector(s);
 const esc=t=>String(t).replace(/[&<>"]/g,x=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[x]));
@@ -275,14 +276,16 @@ function sheet(t,si){if(t==="apply"||t==="admin")return sheet2(t);const m=list()
    await save("requests",{m:m.k,master:m.n,name:n,tg:t,date:d,msg:$("#fm").value.trim()});e.remove();toast("Заявка отправлена!")}}}
 function sheet2(t){const e=document.createElement("div");e.className="sh";e.onclick=ev=>{if(ev.target===e)e.remove()};
  if(t==="apply"){const un=(tg&&tg.initDataUnsafe&&tg.initDataUnsafe.user&&tg.initDataUnsafe.user.username)||"";
-  e.innerHTML=`<div><h3>Анкета мастера</h3><input id="an" placeholder="Имя"><select id="ac">${CATS.map((c,i)=>`<option value="${i}">${c[0]} ${c[1]}</option>`).join("")}</select><select id="ad">${Object.keys(D).map(k=>`<option value="${k}">${D[k]}</option>`).join("")}</select><input id="at" placeholder="Telegram-ник" value="${esc(un)}"><input id="ae" type="number" placeholder="Опыт, лет"><textarea id="ax" rows="3" placeholder="О себе"></textarea><textarea id="as" rows="5" placeholder="Услуги, по одной в строке:&#10;Стрижка — 250000&#10;Стрижка + борода — 400000"></textarea><button class="btn" id="go">Отправить на проверку</button></div>`;
+  e.innerHTML=`<div><h3>Анкета мастера</h3><input id="an" placeholder="Имя"><select id="ac">${CATS.map((c,i)=>`<option value="${i}">${c[0]} ${c[1]}</option>`).join("")}</select><select id="ad">${Object.keys(D).map(k=>`<option value="${k}">${D[k]}</option>`).join("")}</select><input id="at" placeholder="Telegram-ник" value="${esc(un)}"><input id="ae" type="number" placeholder="Опыт, лет"><textarea id="ax" rows="3" placeholder="О себе"></textarea><textarea id="as" rows="5" placeholder="Услуги, по одной в строке:&#10;Стрижка — 250000&#10;Стрижка + борода — 400000"></textarea><label class="lb">Ваше фото</label><input id="aa" type="file" accept="image/*"><label class="lb">Фото работ (до 6)</label><input id="aw" type="file" accept="image/*" multiple><button class="btn" id="go">Отправить на проверку</button></div>`;
   document.body.appendChild(e);
   $("#go").onclick=async()=>{const sv=$("#as").value.split("\n").map(l=>{const x=l.trim().match(/^(.+?)[\s:—–-]+(\d[\d\s.,]*)$/);if(!x)return null;let p=+x[2].replace(/\D/g,"");if(p<5000)p*=1000;return{n:x[1].trim(),p}}).filter(Boolean);
    if(!$("#an").value.trim()||!$("#at").value.trim()||!sv.length)return toast("Нужны имя, ник и хотя бы одна услуга");
-   const r=await api("apply",{master:{name:$("#an").value.trim(),cat:$("#ac").value,district:$("#ad").value,nick:$("#at").value.trim(),exp:$("#ae").value,descr:$("#ax").value.trim(),services:sv}});
+   toast("Загружаем фото…");const avf=$("#aa").files[0],avd=avf?await shrink(avf,400):null,phd=(await Promise.all([...$("#aw").files].slice(0,6).map(f=>shrink(f)))).filter(Boolean);const r=await api("apply",{master:{avatar:avd,photos:phd,name:$("#an").value.trim(),cat:$("#ac").value,district:$("#ad").value,nick:$("#at").value.trim(),exp:$("#ae").value,descr:$("#ax").value.trim(),services:sv}});
    if(r.error)return toast(r.error);e.remove();if(r.status==="approved")await load();toast(r.status==="approved"?"Анкета опубликована":"Отправлено на проверку")}}
- else{e.innerHTML=`<div><h3>На проверке: ${(S.pending||[]).length}</h3>${(S.pending||[]).map(x=>`<div class="r"><b>${esc(x.name)}</b> · ${CATS[x.cat][1]} · ${D[x.district]}<br>@${esc(x.nick)}<br>${esc(x.descr)}<div style="display:flex;gap:8px"><button class="btn j" onclick="mod(${x.id},'approve')">Одобрить</button><button class="btn o" onclick="mod(${x.id},'reject')">Отклонить</button></div></div>`).join("")||"<p class=mu>Новых анкет нет</p>"}</div>`;document.body.appendChild(e)}}
+ else{e.innerHTML=`<div><h3>На проверке: ${(S.pending||[]).length}</h3>${(S.pending||[]).map(x=>`<div class="r"><b>${esc(x.name)}</b> · ${CATS[x.cat][1]} · ${D[x.district]}<br>@${esc(x.nick)}<br>${esc(x.descr)}<br>${(x.photos||[]).map(u=>`<img src="${u}" style="width:60px;height:60px;object-fit:cover;border-radius:8px;margin:4px 4px 0 0">`).join("")}<div style="display:flex;gap:8px"><button class="btn j" onclick="mod(${x.id},'approve')">Одобрить</button><button class="btn o" onclick="mod(${x.id},'reject')">Отклонить</button></div></div>`).join("")||"<p class=mu>Новых анкет нет</p>"}</div>`;document.body.appendChild(e)}}
 async function mod(id,op){if(op==="delete"&&!confirm("Удалить анкету?"))return;const r=await api("moderate",{id,op});if(r.error)return toast(r.error);document.querySelectorAll(".sh").forEach(x=>x.remove());if(op==="delete")S.step=2;await load();toast("Готово")}
 async function delRev(id){if(!confirm("Удалить отзыв?"))return;const r=await api("delete_review",{id});if(r.error)return toast(r.error);await load();toast("Удалён")}
+function shrink(f,max=900){return new Promise(res=>{const r=new FileReader();r.onload=()=>{const i=new Image();i.onload=()=>{const k=Math.min(1,max/Math.max(i.width,i.height)),c=document.createElement("canvas");c.width=i.width*k;c.height=i.height*k;c.getContext("2d").drawImage(i,0,0,c.width,c.height);res(c.toDataURL("image/jpeg",.8))};i.onerror=()=>res(null);i.src=r.result};r.onerror=()=>res(null);r.readAsDataURL(f)})}
+function zoom(u){const e=document.createElement("div");e.className="sh";e.style.cssText="align-items:center;background:#000d";e.onclick=()=>e.remove();e.innerHTML=`<img src="${u}" style="width:100%;max-height:90vh;object-fit:contain">`;document.body.appendChild(e)}
 if(!SEED)M.length=0;render();API?load():initDB();
 </script></body></html>
