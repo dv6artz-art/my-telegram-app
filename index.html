@@ -13,7 +13,8 @@ h1,h2,h3{margin:0;font-weight:800}button{font:inherit;color:inherit;border:0;bac
 .lu{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
 .top{display:flex;align-items:center;gap:8px;padding:10px 16px}
 .ib{width:44px;height:44px;border-radius:14px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--ink);position:relative;flex:none}
-.ib b{position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;border-radius:10px;background:var(--terra);color:#fff;font-size:12px;line-height:20px;text-align:center;padding:0 4px}
+.pb{height:44px;padding:0 12px;border-radius:14px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;gap:6px;font-weight:700;font-size:13px;color:var(--ink);position:relative;flex:none;white-space:nowrap}.pb .lu{width:18px;height:18px}
+.ib b,.pb b{position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;border-radius:10px;background:var(--terra);color:#fff;font-size:12px;line-height:20px;text-align:center;padding:0 4px}
 .brand{display:flex;align-items:center;gap:8px;margin-right:auto}.brand b{font:800 14px/1.05 Manrope;color:var(--jade)}
 .wrap{padding:0 16px 16px}
 .hv{height:112px;border-radius:24px;margin:0 16px;position:relative;overflow:hidden;background:#F4B782 var(--hero) center/cover}
@@ -118,7 +119,7 @@ const D={G:"Гранд Парк",1:"District 1",2:"District 2",3:"District 3",7:
 const FM={home:"У мастера",visit:"Выезд к клиенту",online:"Онлайн"};
 const S={v:"home",stack:[],gi:null,sub:"",q:"",area:ls.get("area","all"),fm:"",sort:"rec",mid:null,fav:ls.get("fav",[]),masters:[],revs:{},mine:[],pending:[],me:null,state:"loading",deep:false};
 /* ===== Данные ===== */
-async function api(action,body){try{const r=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({action,initData:(tg&&tg.initData)||""},body))});return await r.json()}catch(e){return{error:"Нет связи с сервером"}}}
+async function api(action,body){try{const r=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({action,initData:(tg&&tg.initData)||""},body))});let j=null;try{j=await r.json()}catch(_){}if(j&&j.error)return j;if(!r.ok)return{error:"Ошибка сервера "+r.status,detail:(j&&(j.message||j.msg))||r.statusText||""};return j||{error:"Пустой ответ сервера"}}catch(e){return{error:"Нет связи с сервером",detail:String((e&&e.message)||e)}}}
 const mk=x=>({id:x.id,k:"db-"+x.id,n:x.name||"",slug:x.slug,d:x.district,fm:x.formats||[],sv:x.services||[],pf:x.price_from||0,desc:x.descr||"",exp:x.exp||0,ph:x.photos||[],av:x.avatar,ver:!!x.verified,nick:x.nick,up:x.updated_at,cr:x.created_at||"",status:x.status,paused:!!x.paused});
 const DEMORAW=`Алина Рейн|nails|G|6|Маникюр, педикюр, гель-лак. Стерильные инструменты.|Маникюр:250000;Маникюр + гель-лак:350000;Педикюр:380000
 Артём Волков|hair|1|7|Мужские стрижки и уход за бородой.|Стрижка:250000;Стрижка + борода:400000;Детская стрижка:200000
@@ -172,12 +173,12 @@ function wkSvg(m,j){const g=SUBS[m.slug].g,ic=LU[GR[g][0]]||"",c=WKP[(g+j+Math.a
  return "data:image/svg+xml;utf8,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${c[0]}"/><stop offset="1" stop-color="${c[1]}"/></linearGradient></defs><rect width="200" height="200" fill="url(#g)"/><circle cx="160" cy="40" r="50" fill="#fff" fill-opacity=".12"/><circle cx="30" cy="180" r="60" fill="#fff" fill-opacity=".1"/><g transform="translate(58 36) scale(3.5)" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">${ic}</g><text x="100" y="176" font-size="15" font-family="sans-serif" font-weight="700" fill="#fff" text-anchor="middle">${esc(t)}</text></svg>`)}
 const DEMOLIST=DEMORAW.split("\n").map((l,i)=>{const[n,slug,d,exp,desc,sv]=l.split("|"),v=sv.split(";").map(x=>{const[a,p]=x.split(":");return{n:a,p:+p}}),o={id:-(i+1),k:"demo-"+(i+1),n,slug,d,fm:[],sv:v,pf:Math.min(...v.map(x=>x.p)),desc,exp:+exp,ph:[],av:null,ver:(i*7)%5<3,nick:DNICK[i],up:new Date(NOW-((i%6)*DAY+36e5)).toISOString(),cr:new Date(NOW-(40-i)*DAY).toISOString(),status:"approved",paused:false,demo:true};o.ph=[0,1,2,3].map(j=>wkSvg(o,j));return o});
 function demoRevs(){DEMOLIST.forEach((m,i)=>{const g=SUBS[m.slug].g,n=2+(i%3),a=[];for(let k=0;k<n;k++)a.push({id:-(i*10+k+1),master_key:m.k,name:RVN[(i*3+k*2)%10],rating:(i+k)%4===3?4:5,text:RVP[g][(i+k*2)%5],created_at:new Date(NOW-((i*2+k*9+3)*DAY)).toISOString()});S.revs[m.k]=a})}
-async function load(){S.state="loading";render();const r=await api("list");if(r.error||!r.masters){S.offline=true;S.masters=DEMO?DEMOLIST:[];S.revs={};if(DEMO)demoRevs();S.mine=[];S.pending=[];S.state=DEMO?"ok":"error";render();return}S.offline=false;
+async function load(){S.state="loading";render();const r=await api("list");if(r.error||!r.masters){S.err=(r.error||"Пустой ответ")+(r.detail?" ("+r.detail+")":"");S.offline=true;S.masters=DEMO?DEMOLIST:[];S.revs={};if(DEMO)demoRevs();S.mine=[];S.pending=[];S.state=DEMO?"ok":"error";render();return}S.offline=false;
  S.masters=r.masters.map(mk).filter(m=>SUBS[m.slug]).concat(DEMO?DEMOLIST:[]);S.revs={};r.reviews.forEach(x=>(S.revs[x.master_key]=S.revs[x.master_key]||[]).push(x));if(DEMO)demoRevs();
  S.mine=(r.mine||[]).map(mk);S.pending=(r.pending||[]).map(mk);S.me=r.me;S.state="ok";render();
  const sp=tg&&tg.initDataUnsafe&&tg.initDataUnsafe.start_param,mm=/^m(\d+)$/.exec(sp||"");if(mm&&!S.deep){S.deep=true;nav("master",{mid:+mm[1]})}}
 const rate=m=>{const a=S.revs[m.k]||[];return{n:a.length,a:a.length?a.reduce((s,x)=>s+x.rating,0)/a.length:0}};
-const getM=id=>S.masters.find(m=>m.id===id)||S.mine.find(m=>m.id===id);
+const getM=id=>S.masters.find(m=>m.id===id)||S.mine.find(m=>m.id===id)||S.pending.find(m=>m.id===id);
 const isMine=m=>S.mine.some(x=>x.id===m.id);
 const ago=d=>{if(!d)return"";const n=Math.floor((Date.now()-new Date(d))/864e5);return n<1?"сегодня":n<30?n+" дн. назад":Math.floor(n/30)+" мес. назад"};
 const PAL=[["#B8480F","#F2B01E"],["#1F5A47","#7FC8A9"],["#2E7F7C","#9ED8D2"],["#A94A2B","#F0C9A0"]];
@@ -193,12 +194,12 @@ function openTg(n){if(!NICK.test(n||""))return toast("Контакт масте�
 /* ===== Экраны ===== */
 const areaChips=()=>`<div class="chips">${[["all","Все районы"]].concat(DK.map(k=>[k,D[k]])).map(a=>`<button class="chip ${S.area===a[0]?"on":""}" data-a="area" data-v="${a[0]}">${a[1]}</button>`).join("")}</div>`;
 const ver=`<span class="ver" title="Проверен администратором">${lu("shield-check")}</span>`;
-function hdr(){const home=S.v==="home",adm=S.me&&S.me.admin;
- return `<div class="top">${home?"":`<button class="ib" data-a="back" aria-label="Назад">${lu("chevron-left")}</button>`}<span class="brand">${LOGO}<b>Мастера<br>Хошимина</b></span>`+
+function hdr(){const home=S.v==="home",adm=S.me&&S.me.admin,dense=S.mine.length&&adm;
+ return `<div class="top">${home?"":`<button class="ib" data-a="back" aria-label="Назад">${lu("chevron-left")}</button>`}<span class="brand">${LOGO}${home&&!dense?"<b>Мастера<br>Хошимина</b>":""}</span>`+
  (S.v==="master"&&APPLINK?`<button class="ib" data-a="share" aria-label="Поделиться">${lu("share-2")}</button>`:"")+
- (S.mine.length?`<button class="ib" data-a="cab" aria-label="Мои анкеты">${lu("user-round")}</button>`:"")+
- (adm?`<button class="ib" data-a="adm" aria-label="Админка">${lu("shield-check")}${S.pending.length?`<b>${S.pending.length}</b>`:""}</button>`:"")+`</div>`}
-const offb=()=>S.offline&&S.state==="ok"?`<div class="warn">Нет связи с сервером, поэтому показаны только примеры анкет. <button class="link" style="display:inline;margin:0" data-a="retry">Повторить</button></div>`:"";
+ (S.mine.length?`<button class="pb" data-a="cab">${lu("user-round")}Мои анкеты</button>`:"")+
+ (adm?`<button class="pb" data-a="adm">${lu("shield-check")}Админка${S.pending.length?`<b>${S.pending.length}</b>`:""}</button>`:"")+`</div>`}
+const offb=()=>S.offline&&S.state==="ok"?`<div class="warn">Нет связи с сервером, поэтому показаны только примеры анкет. <button class="link" style="display:inline;margin:0" data-a="retry">Повторить</button><br><span class="mu">Причина: ${esc(S.err||"")}</span></div>`:"";
 const strip=(t,a)=>a.length?`<div class="sec"><h2>${t}</h2></div><div class="strip">${a.map(m=>`<button class="mini" data-a="open" data-id="${m.id}"><img src="${ava(m)}" alt=""><b>${esc(m.n)}</b><span>${m.pf?"от "+fmt(m.pf):esc(SUBS[m.slug].n)}</span></button>`).join("")}</div>`:"";
 function home(){const nw=[...S.masters].sort((a,b)=>b.cr.localeCompare(a.cr)).slice(0,8),fv=S.masters.filter(m=>S.fav.includes(m.id));
  return `<div class="hv"><span class="tag">Рядом с вами</span></div><div class="wrap">${offb()}<h1 class="hh">Мастера и услуги в VinHomes Grand Park и Хошимине</h1>
@@ -206,6 +207,7 @@ function home(){const nw=[...S.masters].sort((a,b)=>b.cr.localeCompare(a.cr)).sl
  ${areaChips()}<div class="cg">${GR.map((g,i)=>`<button class="ct" data-a="grp" data-g="${i}"><i>${lu(g[0])}</i>${esc(g[2])}</button>`).join("")}</div>
  ${S.state==="error"?`<div class="ld">Не удалось загрузить мастеров.<br><button class="btn s" data-a="retry">Повторить</button></div>`:S.state==="loading"?`<div class="ld">Загружаем мастеров…</div>`:strip("Новые мастера",nw)+strip("Избранные",fv)}
  <div class="join"><h2>Вы мастер?</h2><p>Разместите анкету за 2 минуты: клиенты напишут вам в Telegram.</p><button class="btn" data-a="newm">Разместить анкету</button></div>
+ <button class="btn o s" data-a="support" style="margin-top:14px">${lu("send")} Связаться с поддержкой</button>
  <p class="foot">${lu("shield-check")} Значок означает, что администратор связался с мастером и проверил его работы.</p></div>`}
 function items(){let L=S.masters.filter(m=>(S.gi==null||SUBS[m.slug].g===S.gi)&&(!S.sub||m.slug===S.sub)&&(S.area==="all"||m.d===S.area));
  const sc=m=>{const r=rate(m);return (m.ver?100:0)+r.a*r.n+r.n};
@@ -235,8 +237,8 @@ function master(){const m=getM(S.mid);if(!m)return `<div class="ld">Анкета
  <h3 class="h3">Услуги и цены</h3>${m.sv.map(x=>`<div class="svc"><span>${esc(x.n)}</span><b>${fmt(x.p)}</b></div>`).join("")}
  ${m.ph.length?`<h3 class="h3">Работы</h3><div class="wks">${m.ph.map(u=>`<button class="wk" data-a="zoom" data-u="${esc(u)}" style="background-image:url('${esc(u)}')" aria-label="Открыть фото"></button>`).join("")}</div>`:""}</div>
  <h3 class="h3" style="margin-top:20px">Отзывы</h3>${rv.map(x=>`<div class="r"><div class="h"><b>${esc(x.name)}${adm?` <a data-a="delrev" data-id="${x.id}" style="color:var(--terra)">✕</a>`:""}</b><span class="st">${"★".repeat(x.rating)}${"☆".repeat(5-x.rating)}</span></div>${esc(x.text)}</div>`).join("")||`<p class="mu">Отзывов пока нет.</p>`}
- ${own?"":`<button class="btn o s" data-a="review">Оставить отзыв</button><button class="link" data-a="report">Пожаловаться на анкету</button>`}
- ${adm&&!m.demo?`<div class="btns"><button class="btn o s" data-a="${m.ver?"unverify":"verify"}" data-id="${m.id}">${m.ver?"Снять «проверен»":"Отметить «проверен»"}</button><button class="btn o s" data-a="del" data-id="${m.id}">Удалить анкету</button></div>`:""}</div>`}
+ ${own?"":`<button class="btn o s" data-a="review">Оставить отзыв</button><button class="link" data-a="report">Пожаловаться на анкету</button><button class="link" data-a="support">Связаться с поддержкой</button>`}
+ ${adm&&!m.demo&&m.status==="pending"?`<div class="btns"><button class="btn s j" data-a="approve" data-id="${m.id}">Одобрить</button><button class="btn s o" data-a="reject" data-id="${m.id}">Отклонить</button></div>`:""}${adm&&!m.demo?`<div class="btns"><button class="btn o s" data-a="${m.ver?"unverify":"verify"}" data-id="${m.id}">${m.ver?"Снять «проверен»":"Отметить «проверен»"}</button><button class="btn o s" data-a="del" data-id="${m.id}">Удалить анкету</button></div>`:""}</div>`}
 function cta(){const m=S.v==="master"&&getM(S.mid),c=$("#cta");
  if(!m){c.className="";c.innerHTML="";document.body.classList.remove("cta-on");return}
  c.className="on";document.body.classList.add("cta-on");
@@ -246,7 +248,7 @@ function render(){$("#app").innerHTML=hdr()+({home,list,master}[S.v]||home)();ct
 function sheet(html){const e=document.createElement("div");e.className="sh";e.innerHTML=`<div>${html}</div>`;e.onclick=ev=>{if(ev.target===e)e.remove()};document.body.appendChild(e);return e}
 const subOpts=sel=>GR.map(g=>`<optgroup label="${esc(g[1])}">${g[3].map(s=>`<option value="${s[0]}" ${s[0]===sel?"selected":""}>${esc(s[1])}</option>`).join("")}</optgroup>`).join("");
 const statusOf=m=>m.status==="pending"?"На проверке":m.status==="rejected"?"Отклонена":m.paused?"На паузе":"Опубликована";
-function cabinet(){sheet(`<h3>Мои анкеты</h3>${S.mine.map(m=>`<div class="r"><b>${esc(m.n)}</b> <span class="mu">· ${statusOf(m)}</span><div class="btns"><button class="btn s o" data-a="open" data-id="${m.id}">Открыть</button><button class="btn s" data-a="edit" data-id="${m.id}">Править</button><button class="btn s o" data-a="pause" data-id="${m.id}">${m.paused?"Возобновить":"Приостановить"}</button><button class="btn s o" data-a="del" data-id="${m.id}">Удалить</button></div></div>`).join("")}<button class="btn" data-a="newm">Новая анкета</button>`)}
+function cabinet(){sheet(`<h3>Мои анкеты</h3>${S.mine.map(m=>`<div class="r"><b>${esc(m.n)}</b> <span class="mu">· ${statusOf(m)}</span><div class="btns"><button class="btn s o" data-a="open" data-id="${m.id}">Открыть</button><button class="btn s" data-a="edit" data-id="${m.id}">Править</button><button class="btn s o" data-a="pause" data-id="${m.id}">${m.paused?"Возобновить":"Приостановить"}</button><button class="btn s o" data-a="del" data-id="${m.id}">Удалить</button></div></div>`).join("")}<button class="btn" data-a="newm">Новая анкета</button><button class="btn o s" data-a="support" style="margin-top:8px">Связаться с поддержкой</button>`)}
 function admin(){sheet(`<h3>На проверке: ${S.pending.length}</h3>${S.pending.map(m=>`<div class="r"><b>${esc(m.n)}</b> · ${esc(SUBS[m.slug]?SUBS[m.slug].n:m.slug)} · ${esc(D[m.d]||"")}<br><span class="mu">@${esc(m.nick)}</span><br>${esc(m.desc)}<br>${m.sv.map(x=>esc(x.n)+" "+fmt(x.p)).join("; ")}<div class="th" style="margin-top:8px">${m.av?`<div><img src="${esc(m.av)}" alt=""></div>`:""}${m.ph.map(u=>`<div><img src="${esc(u)}" alt=""></div>`).join("")}</div><div class="btns"><button class="btn s j" data-a="approve" data-id="${m.id}">Одобрить</button><button class="btn s o" data-a="reject" data-id="${m.id}">Отклонить</button></div></div>`).join("")||`<p class="mu">Новых анкет нет.</p>`}`)}
 function mform(x){
  let rows=x?x.sv.map(s=>({n:s.n,p:s.p})):[{n:"",p:""},{n:"",p:""}],keep=x?[...x.ph]:[],clr=false;
@@ -284,6 +286,9 @@ function mform(x){
 function reviewForm(m){let rt=5;const e=sheet(`<h3>Отзыв о мастере</h3><p class="mu" style="margin:0 0 6px">Отзыв будет опубликован от вашего имени в Telegram.</p><div class="stars" id="st">${[1,2,3,4,5].map(i=>`<button type="button" class="on" data-i="${i}">★</button>`).join("")}</div><textarea id="rt" rows="3" maxlength="600" placeholder="Что вам понравилось?"></textarea><button class="btn" id="go">Отправить</button>`);
  e.querySelector("#st").onclick=ev=>{const b=ev.target.closest("[data-i]");if(!b)return;rt=+b.dataset.i;e.querySelectorAll("#st button").forEach(x=>x.classList.toggle("on",+x.dataset.i<=rt))};
  e.querySelector("#go").onclick=async()=>{const t=e.querySelector("#rt").value.trim();if(t.length<3)return toast("Напишите пару слов",1);if(m.demo){(S.revs[m.k]=S.revs[m.k]||[]).unshift({id:0,master_key:m.k,name:"Вы",rating:rt,text:t,created_at:new Date().toISOString()});e.remove();render();return toast("Спасибо за отзыв!")}const r=await api("review",{master_key:m.k,rating:rt,text:t});if(r.error)return toast(r.error,1);e.remove();await load();toast("Спасибо за отзыв!")}}
+function supportForm(){const cm=S.v==="master"&&getM(S.mid);const e=sheet(`<h3>Связаться с поддержкой</h3><p class="mu" style="margin:0 0 8px">Ответим вам в Telegram. Если у вас не задано имя пользователя (Настройки → Имя пользователя), мы всё равно сможем написать вам.</p><label class="lb">Тема</label><select id="sp">${["Вопрос по работе приложения","Проблема с моей анкетой","Предложение или идея","Жалоба на пользователя","Другое"].map(x=>`<option>${x}</option>`).join("")}</select><label class="lb">Сообщение</label><textarea id="sx" rows="4" maxlength="600" placeholder="Опишите вопрос. Если речь об анкете, укажите её название"></textarea><button class="btn" id="go">Отправить</button>`);
+ e.querySelector("#go").onclick=async()=>{const t=e.querySelector("#sx").value.trim();if(t.length<5)return toast("Опишите вопрос подробнее",1);const b=e.querySelector("#go");b.disabled=true;
+  const r=await api("support",{topic:e.querySelector("#sp").value,text:t,context:cm&&!cm.demo?cm.id:null});if(r.error){b.disabled=false;return toast(r.error,1)}e.remove();toast("Сообщение отправлено. Ответим в Telegram")}}
 function reportForm(m){const e=sheet(`<h3>Пожаловаться на анкету</h3><select id="rs">${["Фейковая анкета","Мошенничество","Неверные контакты или цены","Неприемлемое содержание","Другое"].map(x=>`<option>${x}</option>`).join("")}</select><textarea id="rx" rows="2" maxlength="200" placeholder="Подробности (по желанию)"></textarea><button class="btn" id="go">Отправить жалобу</button>`);
  e.querySelector("#go").onclick=async()=>{if(m.demo){e.remove();return toast("Спасибо, мы проверим анкету")}const r=await api("report",{id:m.id,reason:e.querySelector("#rs").value+": "+e.querySelector("#rx").value});if(r.error)return toast(r.error,1);e.remove();toast("Спасибо, мы проверим анкету")}}
 /* ===== Действия (все клики через data-a, без вставки данных в код) ===== */
@@ -301,6 +306,7 @@ const run=async(a,t)=>{const id=+t.dataset.id,m=getM(id);
  case"review":return m0()&&reviewForm(m0());
  case"report":return m0()&&reportForm(m0());
  case"newm":return mform(null);
+ case"support":return supportForm();
  case"edit":return m&&mform(m);
  case"cab":return cabinet();case"adm":return admin();
  case"pause":{const r=await api("pause",{id,paused:!m.paused});if(r.error)return toast(r.error,1);await load();return toast(m.paused?"Анкета опубликована":"Анкета на паузе")}
