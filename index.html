@@ -96,6 +96,13 @@ h1,h2,h3{font-weight:800;color:var(--ink)}
 .hv .tag{z-index:2}.loc .ph,.loc .ov{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.loc .ov{display:block}
 .how2 em{position:relative;overflow:hidden}.how2 i{z-index:2}.cat .i{position:relative;overflow:hidden}
 .fimg{position:absolute;left:0;bottom:0;width:100%;height:80%;object-fit:contain;object-position:bottom}.fz .tag2{z-index:2}
+.av{object-fit:cover}
+.fact b .st{color:var(--gold);font-size:inherit}
+.lu{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.cat .i{color:var(--terra)}.cat .i .lu{width:30px;height:30px}
+.how2 em{color:var(--jade)}.how2 em .lu{width:30px;height:30px}
+.hrow{display:flex;align-items:center;gap:10px}.hrow .lu{width:28px;height:28px;color:var(--terra)}
+.pin .lu{width:22px;height:22px;color:#fff}.mu .lu{width:14px;height:14px;vertical-align:-2px}
 </style></head><body>
 <div id="app"></div>
 <script>
@@ -205,14 +212,14 @@ function openM(k){const m=M.find(x=>x.k===k);S.area=S.area||"all";S.cat=m.c;S.gr
 const RT=["Всё очень понравилось, остался доволен результатом!","Пунктуально, аккуратно и по адресу. Рекомендую.","Отличный мастер, договорились быстро и без лишних слов.","Цена честная, качество выше ожиданий.","Приятно общаться, всё объяснил и сделал на совесть.","Уже обращаюсь не первый раз, всегда на высоте.","Хороший специалист, обязательно приду ещё.","Всё хорошо, но пришлось немного подождать.","Спасибо! Сделано быстро и аккуратно."];
 const RA=["Алексей","Мария","Дарья","Кирилл","Софья","Роман","Ирина","Павел","Екатерина","Антон"];
 const RR=[5,5,4,5,4,5,5,3];
-const GR=[["💅","Красота и уход","Маникюр,Педикюр,Парикмахеры,Барберы,Косметология,Брови и ресницы,Макияж,Эпиляция"],["🧘","Здоровье и тело","Массаж,SPA-процедуры,Уход за телом,Фитнес и персональные тренировки"],["🍲","Еда и доставка","Домашняя еда,Торты и десерты,Выпечка,Кейтеринг,Доставка продуктов"],["🔧","Ремонт и техника","Компьютеры и ноутбуки,Телефоны,Бытовая техника,Электрика,Сантехника,Мебель и мелкий ремонт"],["📸","Фото, видео и творчество","Фотографы,Видеографы,Монтаж видео,Дизайн,Художники,Тату и пирсинг"],["📚","Обучение","Репетиторы,Музыка,Программирование"],["🧭","Помощь и услуги","Гиды,Переводчики,Сопровождение,Помощь с документами,Курьерские услуги"],["🏠","Дом и быт","Уборка,Химчистка,Помощь по дому,Сборка мебели"]];
-const SUB=[];GR.forEach((g,gi)=>g[2].split(",").forEach(n=>SUB.push({g:gi,n})));
+const GR=[["💅","Красота и уход","Маникюр и педикюр,Педикюр,Парикмахеры,Барберы,Косметология,Брови и ресницы,Макияж,Эпиляция"],["🧘","Здоровье и тело","Массаж,SPA-процедуры,Уход за телом,Фитнес и персональные тренировки"],["🍲","Еда и доставка","Домашняя еда,Торты и десерты,Выпечка,Кейтеринг,Доставка продуктов"],["🔧","Ремонт и техника","Компьютеры и ноутбуки,Телефоны,Бытовая техника,Электрика,Сантехника,Мебель и мелкий ремонт"],["📸","Фото, видео и творчество","Фотографы,Видеографы,Монтаж видео,Дизайн,Художники,Тату и пирсинг"],["📚","Обучение","Репетиторы,Музыка,Программирование"],["🧭","Помощь и услуги","Гиды,Переводчики,Сопровождение,Помощь с документами,Курьерские услуги"],["🏠","Дом и быт","Уборка,Химчистка,Помощь по дому,Сборка мебели"]];
+const SUB=[];GR.forEach((g,gi)=>g[2].split(",").forEach(n=>SUB.push({g:gi,n,h:n==="Педикюр"})));
 SUB.forEach(x=>CATS.push([GR[x.g][0],x.n]));
 const SI=n=>SUB.findIndex(x=>x.n===n);
 const GT=[2,4,1,7,5,8,6,7];
 const T9="Тату и пирсинг,Тату и пирсинг,Тату и пирсинг,Тату и пирсинг,Тату и пирсинг,Тату и пирсинг,Тату и пирсинг,Тату и пирсинг,Тату и пирсинг";
-const MAP=["Барберы,Барберы,Парикмахеры,Парикмахеры,Барберы,Парикмахеры,Барберы,Парикмахеры,Парикмахеры","Домашняя еда,Домашняя еда,Кейтеринг,Торты и десерты,Домашняя еда,Выпечка,Домашняя еда,Домашняя еда,Торты и десерты","Маникюр,Брови и ресницы,Маникюр,Маникюр,Педикюр,Брови и ресницы,Маникюр,Педикюр,Эпиляция",T9,"Массаж,SPA-процедуры,Массаж,Массаж,Массаж,Массаж,Массаж,Уход за телом,Массаж","Фотографы,Фотографы,Монтаж видео,Фотографы,Видеографы,Фотографы,Фотографы,Фотографы,Видеографы","Гиды,Помощь с документами,Сопровождение,Сопровождение,Переводчики,Гиды,Сопровождение,Гиды,Переводчики","Мебель и мелкий ремонт,Мебель и мелкий ремонт,Бытовая техника,Электрика,Сборка мебели,Сантехника,Сантехника,Сборка мебели,Мебель и мелкий ремонт","Репетиторы,Репетиторы,Репетиторы,Программирование,Музыка,Репетиторы,Репетиторы,Репетиторы,Музыка"];
-const catOpts=sel=>GR.map((g,gi)=>`<optgroup label="${g[0]} ${g[1]}">`+SUB.map((x,i)=>x.g===gi?`<option value="${i}" ${i==sel?"selected":""}>${x.n}</option>`:"").join("")+`</optgroup>`).join("");
+const MAP=["Барберы,Барберы,Парикмахеры,Парикмахеры,Барберы,Парикмахеры,Барберы,Парикмахеры,Парикмахеры","Домашняя еда,Домашняя еда,Кейтеринг,Торты и десерты,Домашняя еда,Выпечка,Домашняя еда,Домашняя еда,Торты и десерты","Маникюр и педикюр,Брови и ресницы,Маникюр и педикюр,Маникюр и педикюр,Маникюр и педикюр,Брови и ресницы,Маникюр и педикюр,Маникюр и педикюр,Эпиляция",T9,"Массаж,SPA-процедуры,Массаж,Массаж,Массаж,Массаж,Массаж,Уход за телом,Массаж","Фотографы,Фотографы,Монтаж видео,Фотографы,Видеографы,Фотографы,Фотографы,Фотографы,Видеографы","Гиды,Помощь с документами,Сопровождение,Сопровождение,Переводчики,Гиды,Сопровождение,Гиды,Переводчики","Мебель и мелкий ремонт,Мебель и мелкий ремонт,Бытовая техника,Электрика,Сборка мебели,Сантехника,Сантехника,Сборка мебели,Мебель и мелкий ремонт","Репетиторы,Репетиторы,Репетиторы,Программирование,Музыка,Репетиторы,Репетиторы,Репетиторы,Музыка"];
+const catOpts=sel=>GR.map((g,gi)=>`<optgroup label="${g[1]}">`+SUB.map((x,i)=>x.g===gi&&!x.h?`<option value="${i}" ${i==sel?"selected":""}>${x.n}</option>`:"").join("")+`</optgroup>`).join("");
 const M=[];
 RAW.forEach((b,c)=>(b+RAW2[c]).split("\n").forEach((l,i)=>{const[n,d,nick,p,e,ds]=l.split("|");
  const rv=[];const cnt=2+((c+i)%2);
@@ -230,7 +237,7 @@ async function api(action,body){if(!API)return{error:"Сервер не подк
  try{const r=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action,initData:tgData(),...body})});return await r.json()}catch(e){return{error:"Нет связи с сервером"}}}
 async function load(){const r=await api("list");if(r.error){render();return}
  for(let i=M.length-1;i>=0;i--)if(M[i].db)M.splice(i,1);
- r.masters.forEach(x=>M.push({k:"db-"+x.id,c:x.sub??0,t:GT[SUB[x.sub??0].g],n:x.name,d:x.district,nick:x.nick,price:(x.services[0]||{}).p||0,exp:x.exp,desc:x.descr,ver:x.verified,rv:[],svc:x.services,db:true,ph:x.photos||[],avimg:x.avatar}));
+ r.masters.forEach(x=>M.push({k:"db-"+x.id,c:(x.sub===1?0:(x.sub??0)),t:GT[SUB[x.sub===1?0:(x.sub??0)].g],n:x.name,d:x.district,nick:x.nick,price:(x.services[0]||{}).p||0,exp:x.exp,desc:x.descr,ver:x.verified,rv:[],svc:x.services,db:true,ph:x.photos||[],avimg:x.avatar}));
  S.extra=r.reviews.map(x=>({id:x.id,m:x.master_key,a:x.name,r:x.rating,t:x.text}));S.me=r.me;S.pending=r.pending||[];S.mine=r.mine||[];render()}
 const $=s=>document.querySelector(s);
 const esc=t=>String(t).replace(/[&<>"]/g,x=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[x]));
@@ -262,22 +269,22 @@ function render(){
  <p class="hp">Барберы, бьюти-услуги, массаж, домашняя еда, ремонт, репетиторы и ещё 3 категории. Выбирайте мастера рядом с вами и договаривайтесь напрямую в Telegram.</p>
  <div class="st3"><div>${IC.u}<b>${M.length}</b><span>мастеров</span></div><div>${IC.g}<b>${GR.length}</b><span>категорий</span></div><div>${IC.s}<b>${nv}</b><span>проверено</span></div></div>
  <h2 class="q">Где вы находитесь?</h2>
- <button class="loc l1" onclick="S.area='gp';go(2)">${sk('#fff',.9)}${phLoc(PHOTOS.gp,'rgba(224,103,43,.95)')}<i class="pin">📍</i><span><b>Гранд Парк</b><small>Vinhomes Grand Park</small></span><i class="chev">›</i></button>
- <button class="loc l2" onclick="S.area='all';go(2)">${sk('#fff',.9)}${phLoc(PHOTOS.city,'rgba(47,127,124,.95)')}<i class="pin">📍</i><span><b>Хошимин</b><small>District 1, 2, 3 и 7</small></span><i class="chev">›</i></button>
+ <button class="loc l1" onclick="S.area='gp';go(2)">${sk('#fff',.9)}${phLoc(PHOTOS.gp,'rgba(224,103,43,.95)')}<i class="pin">${lu('map-pin')}</i><span><b>Гранд Парк</b><small>Vinhomes Grand Park</small></span><i class="chev">›</i></button>
+ <button class="loc l2" onclick="S.area='all';go(2)">${sk('#fff',.9)}${phLoc(PHOTOS.city,'rgba(47,127,124,.95)')}<i class="pin">${lu('map-pin')}</i><span><b>Хошимин</b><small>District 1, 2, 3 и 7</small></span><i class="chev">›</i></button>
  <h2 class="q">Как это работает</h2>
- <div class="how2"><div><i style="background:var(--terra)">1</i><em>🏙️${ph((PHOTOS.step||[])[0])}</em><b>Выберите район</b><span>и нужную услугу</span></div><div><i style="background:var(--jade)">2</i><em>✂️${ph((PHOTOS.step||[])[1])}</em><b>Листайте анкеты</b><span>цены, опыт, отзывы</span></div><div><i style="background:var(--teal)">3</i><em>💬${ph((PHOTOS.step||[])[2])}</em><b>Напишите мастеру</b><span>или оставьте заявку</span></div></div>
+ <div class="how2"><div><i style="background:var(--terra)">1</i><em>${lu('map-pin')}</em><b>Выберите район</b><span>и нужную услугу</span></div><div><i style="background:var(--jade)">2</i><em>${lu('users')}</em><b>Листайте анкеты</b><span>цены, опыт, отзывы</span></div><div><i style="background:var(--teal)">3</i><em>${lu('send')}</em><b>Напишите мастеру</b><span>или оставьте заявку</span></div></div>
  ${(S.mine||[]).map(x=>`<button class="btn j" style="margin-top:14px" onclick="sheet('edit',${x.id})">Моя анкета: ${esc(x.name)}${x.status==="pending"?" (на проверке)":""}</button>`).join("")}
  ${(S.mine||[]).length&&!(S.me&&S.me.admin)?'':`<button class="btn o" style="margin-top:14px" onclick="sheet('apply')">Стать мастером: создать свою анкету</button>`}
  ${S.me&&S.me.admin?`<button class="btn j" onclick="sheet('admin')">Админка: на проверке ${(S.pending||[]).length}</button>`:''}
  <div class="fz">${sk('#1F2A24',.13)}${PHOTOS.footer?`<img class="fimg" src="${PHOTOS.footer}" alt="" loading="lazy" decoding="async" onload="this.previousElementSibling.style.display='none'" onerror="this.remove()">`:''}<span class="tag2">Хошимин рядом</span></div>
  <p class="foot">Отметка «✓ проверен» значит, что мы знакомы с мастером лично.</p></div>`}
- else if(S.step===2){h+=`<div class="wrap"><h1>Какая услуга нужна?</h1><div class="grid">`+GR.map((g,gi)=>{const n=M.filter(m=>SUB[m.c].g===gi&&(S.area==="all"||m.d==="G")).length;return `<button class="cat" onclick="S.grp=${gi};go(9)"><div class="i">${g[0]}${ph((PHOTOS.cat||[])[gi])}</div><b>${g[1]}</b><span>${n} мастеров</span></button>`}).join("")+`</div></div>`}
- else if(S.step===9){const g=GR[S.grp];h+=`<div class="wrap"><h1>${g[0]} ${g[1]}</h1><div class="subs">`+SUB.map((x,i)=>{if(x.g!==S.grp)return"";const n=M.filter(m=>m.c===i&&(S.area==="all"||m.d==="G")).length;return `<button class="sub ${n?'':'z'}" ${n?`onclick="S.cat=${i};go(3)"`:'disabled'}><b>${x.n}</b><span>${n?n+" мастеров":"скоро"}</span></button>`}).join("")+`</div></div>`}
+ else if(S.step===2){h+=`<div class="wrap"><h1>Какая услуга нужна?</h1><div class="grid">`+GR.map((g,gi)=>{const n=M.filter(m=>SUB[m.c].g===gi&&(S.area==="all"||m.d==="G")).length;return `<button class="cat" onclick="S.grp=${gi};go(9)"><div class="i">${lu(GI[gi])}</div><b>${g[1]}</b><span>${n} мастеров</span></button>`}).join("")+`</div></div>`}
+ else if(S.step===9){const g=GR[S.grp];h+=`<div class="wrap"><h1 class="hrow">${lu(GI[S.grp])}<span>${g[1]}</span></h1><div class="subs">`+SUB.map((x,i)=>{if(x.g!==S.grp||x.h)return"";const n=M.filter(m=>m.c===i&&(S.area==="all"||m.d==="G")).length;return `<button class="sub ${n?'':'z'}" ${n?`onclick="S.cat=${i};go(3)"`:'disabled'}><b>${x.n}</b><span>${n?n+" мастеров":"скоро"}</span></button>`}).join("")+`</div></div>`}
  else if(S.step===4){h+=gallery()} else{const L=list(),m=L[S.idx],r=revs(m),a=avg(m);
  h+=`<div class="bar"><div class="dots">${L.map((_,i)=>`<i class="${i===S.idx?'on':''}"></i>`).join("")}</div><span class="cnt">${S.idx+1} / ${L.length}</span></div>
  <div class="wrap"><div class="prof" id="prof"><img class="av" src="${av(m)}" alt="">
  <h2 class="nm">${esc(m.n)}</h2>${m.ver?'<span class="ver">✓ проверен</span>':''}
- <div class="mu" style="margin-top:8px;font-size:13px">${CATS[m.c][0]} ${CATS[m.c][1]} · 📍 ${D[m.d]}</div>
+ <div class="mu" style="margin-top:8px;font-size:13px">${CATS[m.c][1]} · ${lu('map-pin')} ${D[m.d]}</div>
  <div class="facts"><div class="fact"><b>${m.exp} лет</b><span>опыт</span></div><div class="fact"><b><span class="st">★</span> ${a.toFixed(1)}</b><span>${r.length} отзывов</span></div></div>
  <p class="desc">${esc(m.desc)}</p>
  <h3 class="sec">Услуги</h3>${svcs(m).map((x,i)=>`<div class="svc"><span>${x[0]}</span><b>${fmt(x[1])}</b></div>`).join("")}
@@ -324,13 +331,13 @@ function sheet2(t,id){const e=document.createElement("div");e.className="sh";e.o
   document.body.appendChild(e);
   $("#go").onclick=async()=>{const sv=$("#as").value.split("\n").map(l=>{const x=l.trim().match(/^(.+?)[\s:—–-]+(\d[\d\s.,]*)$/);if(!x)return null;let p=+x[2].replace(/\D/g,"");if(p<5000)p*=1000;return{n:x[1].trim(),p}}).filter(Boolean);
    if(!$("#an").value.trim()||!$("#at").value.trim()||!sv.length)return toast("Нужны имя, ник и хотя бы одна услуга");
-   toast("Загружаем фото…");const avf=$("#aa").files[0],avd=avf?await shrink(avf,400):null,phd=(await Promise.all([...$("#aw").files].slice(0,6).map(f=>shrink(f)))).filter(Boolean);const r=await api("apply",{master:{avatar:avd,photos:phd,name:$("#an").value.trim(),sub:$("#ac").value,district:$("#ad").value,nick:$("#at").value.trim(),exp:$("#ae").value,descr:$("#ax").value.trim(),services:sv}});
+   toast("Загружаем фото…");const avf=$("#aa").files[0],avd=avf?await shrink(avf,400,true):null,phd=(await Promise.all([...$("#aw").files].slice(0,6).map(f=>shrink(f)))).filter(Boolean);const r=await api("apply",{master:{avatar:avd,photos:phd,name:$("#an").value.trim(),sub:$("#ac").value,district:$("#ad").value,nick:$("#at").value.trim(),exp:$("#ae").value,descr:$("#ax").value.trim(),services:sv}});
    if(r.error)return toast(r.error);e.remove();if(r.status==="approved")await load();toast(r.status==="approved"?"Анкета опубликована":"Отправлено на проверку")}}
  else if(t==="edit"){const x=S.mine.find(z=>z.id==id);if(!x)return;let keep=[...(x.photos||[])],clr=false;
   const opt=(o,sel)=>Object.keys(o).map(k=>`<option value="${k}" ${String(k)===String(sel)?"selected":""}>${o[k]}</option>`).join("");
   e.innerHTML=`<div><h3>Моя анкета</h3>${x.status==="pending"?'<p class="mu" style="font-size:13px">Анкета ещё на проверке у администратора</p>':''}
   <label class="lb">Имя</label><input id="en" value="${esc(x.name)}">
-  <label class="lb">Категория</label><select id="ecat">${catOpts(x.sub)}</select>
+  <label class="lb">Категория</label><select id="ecat">${catOpts(x.sub===1?0:x.sub)}</select>
   <label class="lb">Район</label><select id="edis">${opt(D,x.district)}</select>
   <label class="lb">Telegram-ник</label><input id="et" value="${esc(x.nick)}">
   <label class="lb">Опыт, лет</label><input id="ee" type="number" value="${x.exp||0}">
@@ -345,12 +352,26 @@ function sheet2(t,id){const e=document.createElement("div");e.className="sh";e.o
   $("#ek").onclick=ev=>{const i=ev.target.dataset.i;if(i!=null){keep.splice(+i,1);draw()}};
   const cb=$("#ecl");if(cb)cb.onclick=()=>{clr=true;cb.textContent="Аватарка будет удалена"};
   $("#go").onclick=async()=>{const sv=parseSv($("#es").value);if(!$("#en").value.trim()||!$("#et").value.trim()||!sv.length)return toast("Нужны имя, ник и хотя бы одна услуга");
-   toast("Сохраняем…");const af=$("#ea").files[0],ad=af?await shrink(af,400):null,pd=(await Promise.all([...$("#ew").files].slice(0,Math.max(0,6-keep.length)).map(f=>shrink(f)))).filter(Boolean);
+   toast("Сохраняем…");const af=$("#ea").files[0],ad=af?await shrink(af,400,true):null,pd=(await Promise.all([...$("#ew").files].slice(0,Math.max(0,6-keep.length)).map(f=>shrink(f)))).filter(Boolean);
    const r=await api("update",{id:x.id,master:{name:$("#en").value.trim(),sub:$("#ecat").value,district:$("#edis").value,nick:$("#et").value.trim(),exp:$("#ee").value,descr:$("#ex").value.trim(),services:sv,keep,photos:pd,avatar:ad,avatarClear:clr}});
    if(r.error)return toast(r.error);e.remove();S.step=1;await load();toast("Сохранено")}}
  else{e.innerHTML=`<div><h3>На проверке: ${(S.pending||[]).length}</h3>${(S.pending||[]).map(x=>`<div class="r"><b>${esc(x.name)}</b> · ${CATS[x.sub][1]} · ${D[x.district]}<br>@${esc(x.nick)}<br>${esc(x.descr)}<br>${(x.photos||[]).map(u=>`<img src="${u}" style="width:60px;height:60px;object-fit:cover;border-radius:8px;margin:4px 4px 0 0">`).join("")}<div style="display:flex;gap:8px"><button class="btn j" onclick="mod(${x.id},'approve')">Одобрить</button><button class="btn o" onclick="mod(${x.id},'reject')">Отклонить</button></div></div>`).join("")||"<p class=mu>Новых анкет нет</p>"}</div>`;document.body.appendChild(e)}}
 async function mod(id,op){if(op==="delete"&&!confirm("Удалить анкету?"))return;const r=await api("moderate",{id,op});if(r.error)return toast(r.error);document.querySelectorAll(".sh").forEach(x=>x.remove());if(op==="delete")S.step=2;await load();toast("Готово")}
 async function delRev(id){if(!confirm("Удалить отзыв?"))return;const r=await api("delete_review",{id});if(r.error)return toast(r.error);await load();toast("Удалён")}
+const LU={
+"map-pin":'<path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/>',
+"users":'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+"send":'<path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/>',
+"sparkles":'<path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/>',
+"heart-pulse":'<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/>',
+"utensils":'<path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>',
+"wrench":'<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/>',
+"camera":'<path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"/><circle cx="12" cy="13" r="3"/>',
+"graduation-cap":'<path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/>',
+"life-buoy":'<circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/><circle cx="12" cy="12" r="4"/>',
+"house":'<path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>'};
+const lu=n=>`<svg class="lu" viewBox="0 0 24 24" aria-hidden="true">${LU[n]||""}</svg>`;
+const GI=["sparkles","heart-pulse","utensils","wrench","camera","graduation-cap","life-buoy","house"];
 const LOGO=`<svg width="34" height="34" viewBox="0 0 40 40" fill="none" stroke="#1F5A47" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 34V20h5v14M13 34V12l3-4 3 4v22M22 34V16h5v18M30 34V24h5v10M4 34h32"/><circle cx="31" cy="9" r="3" stroke="#E0672B"/></svg>`;
 const IC={u:`<svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 19c0-3.3 2.7-5 6-5s6 1.7 6 5"/><circle cx="17" cy="9" r="2.3"/><path d="M17 14c2.5 0 4 1.5 4 4"/></svg>`,g:`<svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>`,s:`<svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>`};
 function skyUri(col,op){const v=`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 120' preserveAspectRatio='xMidYMax slice'><g fill='${col}' fill-opacity='${op||1}'><rect x='8' y='72' width='26' height='48'/><rect x='38' y='56' width='22' height='64'/><rect x='64' y='82' width='30' height='38'/><path d='M100 120V48Q108 32 118 30L124 38V120Z'/><rect x='118' y='34' width='14' height='3'/><rect x='130' y='64' width='20' height='56'/><rect x='154' y='78' width='28' height='42'/><path d='M192 120V54L199 32H213L220 54V120Z'/><path d='M205 32L206.5 2L208 32Z'/><rect x='226' y='60' width='26' height='60'/><rect x='256' y='74' width='22' height='46'/><rect x='282' y='48' width='24' height='72'/><rect x='310' y='80' width='30' height='40'/><rect x='344' y='64' width='22' height='56'/><rect x='370' y='84' width='24' height='36'/></g></svg>`;return "data:image/svg+xml;utf8,"+encodeURIComponent(v)}
@@ -363,7 +384,7 @@ const ph=u=>u?`<img class="ph" src="${u}" alt="" loading="lazy" decoding="async"
 const phHero=()=>PHOTOS.hero?`<img class="ph" src="${PHOTOS.hero}" alt="" fetchpriority="high" decoding="async" onerror="this.remove()">`:'';
 const phLoc=(u,c)=>u?`<img class="ph" src="${u}" alt="" loading="lazy" decoding="async" onload="this.nextElementSibling.style.display='block'" onerror="this.remove()"><i class="ov" style="display:none;background:linear-gradient(100deg,${c} 32%,rgba(0,0,0,.08))"></i>`:'';
 function parseSv(t){return t.split("\n").map(l=>{const x=l.trim().match(/^(.+?)[\s:—–-]+(\d[\d\s.,]*)$/);if(!x)return null;let p=+x[2].replace(/\D/g,"");if(p<5000)p*=1000;return{n:x[1].trim(),p}}).filter(Boolean)}
-function shrink(f,max=900){return new Promise(res=>{const r=new FileReader();r.onload=()=>{const i=new Image();i.onload=()=>{const k=Math.min(1,max/Math.max(i.width,i.height)),c=document.createElement("canvas");c.width=i.width*k;c.height=i.height*k;c.getContext("2d").drawImage(i,0,0,c.width,c.height);res(c.toDataURL("image/jpeg",.8))};i.onerror=()=>res(null);i.src=r.result};r.onerror=()=>res(null);r.readAsDataURL(f)})}
+function shrink(f,max=900,sq){return new Promise(res=>{const r=new FileReader();r.onload=()=>{const i=new Image();i.onload=()=>{let sx=0,sy=0,sw=i.width,sh=i.height;if(sq){const m=Math.min(sw,sh);sx=(sw-m)/2;sy=(sh-m)/2;sw=sh=m}const k=Math.min(1,max/Math.max(sw,sh)),c=document.createElement("canvas");c.width=Math.round(sw*k);c.height=Math.round(sh*k);c.getContext("2d").drawImage(i,sx,sy,sw,sh,0,0,c.width,c.height);res(c.toDataURL("image/jpeg",.8))};i.onerror=()=>res(null);i.src=r.result};r.onerror=()=>res(null);r.readAsDataURL(f)})}
 function zoom(u){const e=document.createElement("div");e.className="sh";e.style.cssText="align-items:center;background:#000d";e.onclick=()=>e.remove();e.innerHTML=`<img src="${u}" style="width:100%;max-height:90vh;object-fit:contain">`;document.body.appendChild(e)}
 if(!SEED)M.length=0;render();API?load():initDB();
 </script></body></html>
