@@ -107,9 +107,9 @@ flag:'<path d="M4 22V4a1 1 0 0 1 .4-.8A6 6 0 0 1 8 2c3 0 5 2 7.333 2q2 0 3.067-.
 x:'<path d="M18 6 6 18"/><path d="m6 6 12 12"/>'};
 const lu=n=>`<svg class="lu" viewBox="0 0 24 24" aria-hidden="true">${LU[n]||""}</svg>`;
 const LOGO=`<svg width="34" height="34" viewBox="0 0 40 40" fill="none" stroke="#1F5A47" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 34V20h5v14M13 34V12l3-4 3 4v22M22 34V16h5v18M30 34V24h5v10M4 34h32"/><circle cx="31" cy="9" r="3" stroke="#B8480F"/></svg>`;
-/* ===== Каталог: 8 групп, 43 подкатегории (код подкатегории хранится в базе) ===== */
+/* ===== Каталог: 8 групп, 44 подкатегории (код подкатегории хранится в базе) ===== */
 const GR=[
-["sparkles","Красота и уход","Красота",[["nails","Маникюр и педикюр"],["hair","Парикмахеры и барберы"],["brows","Брови и ресницы"],["cosmo","Косметология и эпиляция"],["makeup","Макияж"],["tattoo","Тату и пирсинг"],["tailor","Ателье и пошив"]]],
+["sparkles","Красота и уход","Красота",[["nails","Маникюр и педикюр"],["podo","Подологи"],["hair","Парикмахеры и барберы"],["brows","Брови и ресницы"],["cosmo","Косметология"],["epil","Эпиляция"],["makeup","Макияж"],["tattoo","Тату и пирсинг"]]],
 ["heart-pulse","Здоровье и тело","Здоровье и тело",[["massage","Массаж"],["spa","SPA и уход за телом"],["yoga","Йога, пилатес, растяжка"],["dance","Танцы"],["fitness","Тренеры и спорт","фитнес, бокс, теннис, плавание"],["psy","Психологи и коучи"]]],
 ["utensils","Еда","Еда",[["homefood","Домашняя еда"],["cakes","Торты и выпечка"],["catering","Кейтеринг и доставка"]]],
 ["wrench","Ремонт и техника","Ремонт и техника",[["pc","Компьютеры и телефоны"],["appliance","Техника и кондиционеры"],["electric","Электрика и сантехника"],["fix","Мелкий ремонт и сборка мебели"],["reno","Ремонт квартир и отделка"],["auto","Авто и мото"]]],
@@ -129,7 +129,7 @@ const mk=x=>({id:x.id,k:"db-"+x.id,n:x.name||"",slug:x.slug,d:x.district,fm:x.fo
 const DEMORAW=`Алина Рейн|nails|G|6|Маникюр, педикюр, гель-лак. Стерильные инструменты.|Маникюр:250000;Маникюр + гель-лак:350000;Педикюр:380000
 Артём Волков|hair|1|7|Мужские стрижки и уход за бородой.|Стрижка:250000;Стрижка + борода:400000;Детская стрижка:200000
 Лиза Ветрова|brows|2|5|Брови и ресницы: коррекция, окрашивание, ламинирование.|Коррекция бровей:150000;Ламинирование бровей:300000;Ламинирование ресниц:400000
-Яна Орлова|cosmo|7|8|Чистка лица, пилинги, эпиляция воском.|Чистка лица:500000;Пилинг:450000;Депиляция ног:300000
+Яна Орлова|cosmo|7|8|Чистка лица, пилинги, уходовые программы.|Чистка лица:500000;Пилинг:450000;Уход за лицом:600000
 Сергей Ладов|massage|1|9|Классический и лечебный массаж спины и шеи.|Массаж 60 минут:400000;Массаж 90 минут:580000;Шея и плечи:250000
 Ирина Нова|spa|2|7|SPA-программы и обёртывания.|SPA-программа:900000;Обёртывание:600000;Скраб тела:450000
 Никита Руки|massage|G|6|Спортивный массаж и разминка после тренировок.|Спортивный массаж:450000;Массаж ног:300000
@@ -167,8 +167,6 @@ const DEMORAW=`Алина Рейн|nails|G|6|Маникюр, педикюр, г�
 Влад Степ|dance|G|6|Хип-хоп и современная хореография для детей и взрослых.|Групповое занятие:220000;Индивидуальное занятие:550000
 Елена Диалог|psy|7|10|Психолог: консультации онлайн и очно.|Первичная встреча:500000;Консультация 50 минут:900000;Пакет 4 встречи:3200000
 Игорь Фокус|psy|1|8|Коуч: карьера, релокация, постановка целей.|Сессия 60 минут:1000000;Пакет 4 сессии:3600000
-Лилия Нитка|tailor|3|9|Пошив и ремонт одежды, подгонка по фигуре.|Подгонка платья:300000;Пошив рубашки:900000;Замена молнии:120000
-Рита Игла|tailor|G|6|Ремонт и укорачивание одежды, шторы на заказ.|Укоротить брюки:100000;Пошив штор (за м²):250000;Мелкий ремонт одежды:80000
 Олег Стройка|reno|2|14|Ремонт квартир под ключ и отделка.|Замер и смета:200000;Покраска стен (м²):120000;Укладка плитки (м²):350000
 Борис Столяр|reno|7|11|Мебель на заказ: шкафы, кухни, полки.|Замер:150000;Полка на заказ:900000;Шкаф на заказ (м.п.):4500000
 Роман Байкер|auto|1|10|Ремонт и обслуживание мотобайков и скутеров.|Диагностика:150000;Замена масла:200000;Мойка байка:100000
@@ -195,9 +193,13 @@ const DEMORAW=`Алина Рейн|nails|G|6|Маникюр, педикюр, г�
 Хоа Нгуен|languages|2|6|Вьетнамский с носителем, разговорная практика.|Урок 60 минут:350000;Пробный урок:150000
 Леся Праздник|events|1|8|Ведущая мероприятий и частных праздников.|Ведущий (час):1500000;Программа вечера:6000000
 Макс Звук|events|3|10|Диджей и звук для мероприятий.|Диджей (час):1000000;Выезд со звуком:4000000
-Леонид Формула|tutor|G|9|Химия и биология, подготовка к олимпиадам.|Урок 60 минут:450000;Пробный урок:250000`;
+Леонид Формула|tutor|G|9|Химия и биология, подготовка к олимпиадам.|Урок 60 минут:450000;Пробный урок:250000
+Дарина Гладкая|epil|G|7|Шугаринг и воск, одноразовые материалы.|Шугаринг ног:350000;Бикини:300000;Подмышки:120000
+Мирра Воск|epil|2|5|Эпиляция воском, аккуратно и быстро.|Воск, ноги:300000;Воск, подмышки:100000
+Анжела Стопа|podo|1|10|Подолог: аппаратный педикюр, вросшие ногти, мозоли.|Подологический педикюр:550000;Обработка вросшего ногтя:400000;Коррекция ногтей (скоба):900000
+Виталий Шаг|podo|G|7|Подолог: проблемные стопы, трещины, грибок ногтей.|Консультация:200000;Подологическая обработка:500000`;
 const DAY=864e5,NOW=Date.now();
-const DNICK="alina_rein_nails,artem_volkov_barber,liza_vetrova_brows,yana_orlova_cosmo,sergey_ladov_massage,irina_nova_spa,nikita_ruki_sport,gleb_sila_fit,olga_kuhareva_food,larisa_testo_cakes,tanya_miro_food,marina_sol_catering,nikolay_masterov,fedor_kondey,stas_tok_electric,max_byte_pc,mila_chistova,ruslan_poryadok,vera_uyut_home,timofey_pomoshnik,dmitry_luchov_foto,anton_kadr_video,polina_eskiz,kirill_ray_ink,anna_mel_tutor,ksenia_noty,maxim_code_py,natalia_viet_lang,andrey_putev_guide,sveta_most_docs,viktor_compass,yulia_orient,dmitry_ring_box,pavel_volna_swim,artur_court_tennis,alena_lotos_yoga,diana_balance_pilates,karina_ritm_dance,vlad_step_dance,elena_dialog_psy,igor_focus_coach,lilia_nitka_atelier,rita_igla_atelier,oleg_stroyka,boris_stolyar,roman_biker,evgeny_garage,oksana_nanny,irina_ladushki,darya_rostok,alexey_fantazer,galina_rech_logo,tamara_igra,artur_sharik,kristina_confetti,alisa_lapka_pets,egor_hvost,vasily_pereezd,zahar_furgon,eduard_rul,renat_doroga,inna_klyuch,grigory_adres,yuliana_perevod,timur_lingva,maria_lingvo,hoa_nguyen_vn,lesya_prazdnik,max_zvuk_dj,leonid_formula".split(",");
+const DNICK="alina_rein_nails,artem_volkov_barber,liza_vetrova_brows,yana_orlova_cosmo,sergey_ladov_massage,irina_nova_spa,nikita_ruki_sport,gleb_sila_fit,olga_kuhareva_food,larisa_testo_cakes,tanya_miro_food,marina_sol_catering,nikolay_masterov,fedor_kondey,stas_tok_electric,max_byte_pc,mila_chistova,ruslan_poryadok,vera_uyut_home,timofey_pomoshnik,dmitry_luchov_foto,anton_kadr_video,polina_eskiz,kirill_ray_ink,anna_mel_tutor,ksenia_noty,maxim_code_py,natalia_viet_lang,andrey_putev_guide,sveta_most_docs,viktor_compass,yulia_orient,dmitry_ring_box,pavel_volna_swim,artur_court_tennis,alena_lotos_yoga,diana_balance_pilates,karina_ritm_dance,vlad_step_dance,elena_dialog_psy,igor_focus_coach,oleg_stroyka,boris_stolyar,roman_biker,evgeny_garage,oksana_nanny,irina_ladushki,darya_rostok,alexey_fantazer,galina_rech_logo,tamara_igra,artur_sharik,kristina_confetti,alisa_lapka_pets,egor_hvost,vasily_pereezd,zahar_furgon,eduard_rul,renat_doroga,inna_klyuch,grigory_adres,yuliana_perevod,timur_lingva,maria_lingvo,hoa_nguyen_vn,lesya_prazdnik,max_zvuk_dj,leonid_formula,darina_sugar,mirra_wax,angela_podo,vitaly_podo".split(",");
 const RVN=["Мария К.","Алексей П.","Дарья С.","Игорь Л.","Екатерина В.","Роман Т.","Ирина М.","Павел Н.","София Д.","Антон Ч."];
 const RVP=[["Очень аккуратная работа, всё стерильно. Обязательно придём ещё.","Результат держится уже третью неделю, спасибо!","Приятная атмосфера, всё вовремя, цена честная.","Всё объяснили и подсказали по уходу, очень довольны.","Быстро и качественно, рекомендуем."],
 ["Спина перестала болеть уже после второго сеанса.","Профессионально, чувствуется большой опыт. Вернёмся обязательно.","Очень приятный сеанс, ощущения как после отпуска.","Всё чисто и спокойно, пунктуальность на высоте.","Шея перестала беспокоить, прошёл уже месяц."],
