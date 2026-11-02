@@ -72,8 +72,9 @@ select.sel{width:auto;margin:0;padding:8px 10px;font-size:13px;border-radius:10p
 .sh h3{margin-bottom:10px}.lb{display:block;font-size:13px;font-weight:700;margin:8px 2px 4px}
 input,select,textarea{width:100%;font:16px Manrope,sans-serif;padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff;margin-bottom:8px;color:var(--ink)}
 .svr{display:grid;grid-template-columns:1fr 44px;gap:8px;align-items:start;padding-bottom:12px;border-bottom:1px dashed var(--line);margin-bottom:12px}.svr:last-child{border:0;margin:0;padding:0}.svr .ib{height:46px}
-.svr .pw{grid-column:1/-1;display:flex;gap:8px}.svr .pw input{flex:1;min-width:0}
-.ot{flex:none;height:46px;padding:0 14px;border-radius:14px;border:1px solid var(--line);background:#fff;color:var(--mute);font-weight:700;font-size:14px}.ot.on{background:var(--terra);border-color:var(--terra);color:#fff}
+.svr .pw{grid-column:1/-1;display:flex;flex-direction:column;gap:8px}
+.seg{display:grid;grid-template-columns:1fr 1fr;background:#EFE7D6;border-radius:12px;padding:3px}.seg button{height:36px;border-radius:10px;font-weight:700;font-size:13px;color:var(--mute)}.seg button.on{background:#fff;color:var(--terra);box-shadow:0 1px 4px rgba(31,42,36,.15)}
+.pv{font-size:13px;color:var(--mute)}.pv b{color:var(--ink)}
 .warn{background:#FFF1D6;border-radius:12px;padding:10px 12px;font-size:13.5px;margin:8px 0}
 details{margin:10px 0}summary{font-weight:700;padding:10px 0;cursor:pointer}
 .th{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px}.th div{position:relative}.th img{width:72px;height:72px;object-fit:cover;border-radius:10px;display:block}.th a{position:absolute;top:-6px;right:-6px;background:var(--terra);color:#fff;border-radius:50%;width:24px;height:24px;line-height:24px;text-align:center;font-weight:700}
@@ -331,11 +332,12 @@ function mform(x){
  <label class="lb">Фото работ (до 10)</label><div class="th" id="fk"></div><input id="fw" type="file" accept="image/*" multiple></details>
  <button class="btn" id="fgo" style="margin-top:8px">${x?"Сохранить":"Отправить на проверку"}</button>`);
  const q=s=>e.querySelector(s);
- const drawR=()=>{q("#fr").innerHTML=rows.map((r,i)=>`<div class="svr"><input data-i="${i}" data-f="n" maxlength="60" placeholder="Услуга, например: Стрижка" value="${esc(r.n)}"><button type="button" class="ib" data-d="${i}" aria-label="Удалить">${lu("x")}</button><div class="pw"><button type="button" class="ot ${r.f?"on":""}" data-o="${i}" aria-pressed="${!!r.f}" title="Цена «от», а не фиксированная">от</button><input data-i="${i}" data-f="p" inputmode="numeric" placeholder="Цена, ₫" value="${esc(r.p)}"></div></div>`).join("")};
+ const pvTxt=r=>{const p=parseInt(String(r.p).replace(/\D/g,""))||0;return p?`Клиент увидит: <b>${r.f?"от ":""}${fmt(p)}</b>`:"Введите цену"};
+ const drawR=()=>{q("#fr").innerHTML=rows.map((r,i)=>`<div class="svr"><input data-i="${i}" data-f="n" maxlength="60" placeholder="Услуга, например: Стрижка" value="${esc(r.n)}"><button type="button" class="ib" data-d="${i}" aria-label="Удалить">${lu("x")}</button><div class="pw"><input data-i="${i}" data-f="p" inputmode="numeric" placeholder="Цена, ₫" value="${esc(r.p)}"><div class="seg" role="group" aria-label="Тип цены"><button type="button" data-o="${i}" data-v="0" class="${r.f?"":"on"}">Точная цена</button><button type="button" data-o="${i}" data-v="1" class="${r.f?"on":""}">Цена «от»</button></div><div class="pv" data-i="${i}">${pvTxt(r)}</div></div></div>`).join("")};
  const drawK=()=>{q("#fk").innerHTML=keep.map((u,i)=>`<div><img src="${esc(u)}" alt=""><a data-r="${i}">✕</a></div>`).join("")};
  drawR();drawK();
- q("#fr").oninput=ev=>{const t=ev.target;if(t.dataset.i!=null)rows[+t.dataset.i][t.dataset.f]=t.value};
- q("#fr").onclick=ev=>{const o=ev.target.closest("[data-o]");if(o){const r=rows[+o.dataset.o];r.f=!r.f;o.classList.toggle("on",r.f);o.setAttribute("aria-pressed",r.f);return}const b=ev.target.closest("[data-d]");if(b&&rows.length>1){rows.splice(+b.dataset.d,1);drawR()}};
+ q("#fr").oninput=ev=>{const t=ev.target;if(t.dataset.i!=null){const i=+t.dataset.i;rows[i][t.dataset.f]=t.value;const v=q(`.pv[data-i="${i}"]`);if(v)v.innerHTML=pvTxt(rows[i])}};
+ q("#fr").onclick=ev=>{const o=ev.target.closest("[data-o]");if(o){const i=+o.dataset.o,r=rows[i];r.f=o.dataset.v==="1";o.parentNode.querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===o));q(`.pv[data-i="${i}"]`).innerHTML=pvTxt(r);return}const b=ev.target.closest("[data-d]");if(b&&rows.length>1){rows.splice(+b.dataset.d,1);drawR()}};
  q("#fadd").onclick=()=>{if(rows.length<12){rows.push({n:"",p:"",f:false});drawR()}};
  q("#fk").onclick=ev=>{const a=ev.target.closest("[data-r]");if(a){keep.splice(+a.dataset.r,1);drawK()}};
  const cl=q("#fclr");if(cl)cl.onclick=()=>{clr=true;cl.textContent="Фото будет удалено"};
