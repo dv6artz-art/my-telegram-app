@@ -303,7 +303,7 @@ function mform(x){
  <label class="lb">О себе (до 300 символов)</label><textarea id="fx" rows="3" maxlength="300">${esc(x?x.desc:"")}</textarea>
  <label class="lb">Опыт, лет</label><input id="fe" type="number" min="0" max="60" inputmode="numeric" value="${x&&x.exp?x.exp:""}">
  <label class="lb">Фото работ (до 10)</label><div class="th" id="fk"></div><input id="fw" type="file" accept="image/*" multiple></details>
- <p class="mu" style="margin:10px 2px 0;font-size:12px">Отправляя анкету, вы подтверждаете, что сведения верны, а за свои услуги вы отвечаете сами. Приложение это каталог, а не сторона сделки. Анкеты проверяются вручную.</p><button class="btn" id="fgo" style="margin-top:8px">${x?"Сохранить":"Отправить на проверку"}</button>`);
+ <button class="btn" id="fgo" style="margin-top:8px">${x?"Сохранить":"Отправить на проверку"}</button>`);
  const q=s=>e.querySelector(s);
  const pvTxt=r=>{const p=parseInt(String(r.p).replace(/\D/g,""))||0;return p?`Клиент увидит: <b>${r.f?"от ":""}${fmt(p)}</b>`:"Введите цену"};
  const drawR=()=>{q("#fr").innerHTML=rows.map((r,i)=>`<div class="svr"><input data-i="${i}" data-f="n" maxlength="60" placeholder="Услуга, например: Стрижка" value="${esc(r.n)}"><button type="button" class="ib" data-d="${i}" aria-label="Удалить">${lu("x")}</button><div class="pw"><input data-i="${i}" data-f="p" inputmode="numeric" placeholder="Цена, ₫" value="${esc(r.p)}"><div class="seg" role="group" aria-label="Тип цены"><button type="button" data-o="${i}" data-v="0" class="${r.f?"":"on"}">Точная цена</button><button type="button" data-o="${i}" data-v="1" class="${r.f?"on":""}">Цена «от»</button></div><div class="pv" data-i="${i}">${pvTxt(r)}</div></div></div>`).join("")};
