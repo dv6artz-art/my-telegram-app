@@ -206,6 +206,7 @@ async function load(){S.state="loading";render();const r=await api("list");if(r.
  S.masters=r.masters.map(mk).filter(m=>SUBS[m.slug]).concat(DEMO?DEMOLIST:[]);S.revs={};r.reviews.forEach(x=>(S.revs[x.master_key]=S.revs[x.master_key]||[]).push(x));if(DEMO)demoRevs();
  S.mine=(r.mine||[]).map(mk);S.pending=(r.pending||[]).map(mk);S.me=r.me;S.state="ok";render();
  const sp=tg&&tg.initDataUnsafe&&tg.initDataUnsafe.start_param,mm=/^m(\d+)$/.exec(sp||"");if(mm&&!S.deep){S.deep=true;nav("master",{mid:+mm[1]})}}
+const errBox=()=>S.err&&S.err.indexOf("Откройте приложение")===0?`<div class="ld">Каталог открывается только внутри Telegram.<br>Откройте бота и нажмите кнопку меню.</div>`:`<div class="ld">Не удалось загрузить мастеров.<br><button class="btn s" data-a="retry">Повторить</button></div>`;
 const rate=m=>{const a=S.revs[m.k]||[];return{n:a.length,a:a.length?a.reduce((s,x)=>s+x.rating,0)/a.length:0}};
 const getM=id=>S.masters.find(m=>m.id===id)||S.mine.find(m=>m.id===id)||S.pending.find(m=>m.id===id);
 const isMine=m=>S.mine.some(x=>x.id===m.id);
@@ -243,7 +244,7 @@ function home(){const nw=[...S.masters].sort((a,b)=>b.cr.localeCompare(a.cr)).sl
  return `<div class="hv"><span class="tag">Рядом с вами</span></div><div class="wrap">${offb()}<h1 class="hh">Мастера и услуги в VinHomes Grand Park и Хошимине</h1>
  <p class="hp">Барберы, бьюти-услуги, массаж, домашняя еда, ремонт, репетиторы и многое другое. Выбирайте мастера рядом с вами и договаривайтесь напрямую в Telegram.</p>
  ${areaChips()}<div class="cg">${GR.map((g,i)=>`<button class="ct" data-a="grp" data-g="${i}">${CPH[i]?`<div class="ph" style="background-image:url(${CPH[i]})" role="img" aria-label="${esc(g[2])}"></div>`:`<div class="ph ic">${lu(g[0])}</div>`}<span>${esc(g[2])}</span></button>`).join("")}</div>
- ${S.state==="error"?`<div class="ld">Не удалось загрузить мастеров.<br><button class="btn s" data-a="retry">Повторить</button></div>`:S.state==="loading"?`<div class="ld">Загружаем мастеров…</div>`:strip("Новые мастера",nw)+strip("Избранные",fv)}
+ ${S.state==="error"?`${errBox()}`:S.state==="loading"?`<div class="ld">Загружаем мастеров…</div>`:strip("Новые мастера",nw)+strip("Избранные",fv)}
  <div class="join"><h2>Вы мастер?</h2><p>Разместите анкету за 2 минуты: клиенты напишут вам в Telegram.</p><button class="btn" data-a="newm">Разместить анкету</button></div>
  <button class="btn o s" data-a="support" style="margin-top:14px">${lu("send")} Связаться с поддержкой</button>
  <p class="foot">${lu("shield-check")} Значок означает, что администратор связался с мастером и проверил его работы.</p></div>`}
@@ -258,7 +259,7 @@ function card(m){const r=rate(m),s=SUBS[m.slug];
  <div class="mr"><span class="pr">${m.pf?"от "+fmt(m.pf):""}</span><span>${r.n?`<i class="st">★</i> ${r.a.toFixed(1)} (${r.n})`:`<span class="new">Новый</span>`}</span></div></div>
  <button class="hb ${S.fav.includes(m.id)?"on":""}" data-a="fav" data-id="${m.id}" aria-label="В избранное">${lu("heart")}</button></div>`}
 function res(){if(S.state==="loading")return `<div class="ld">Загружаем…</div>`;
- if(S.state==="error")return `<div class="ld">Не удалось загрузить мастеров.<br><button class="btn s" data-a="retry">Повторить</button></div>`;
+ if(S.state==="error")return `${errBox()}`;
  const L=items();if(!L.length)return `<div class="ld">${S.masters.length?"Ничего не найдено. Попробуйте изменить фильтры.":"Пока здесь нет мастеров."}<br><button class="btn s" data-a="newm">Я мастер — разместить анкету</button></div>`;
  return `<div class="row"><span>Найдено: ${L.length}</span><select class="sel" id="sort">${[["rec","Рекомендуемые"],["price","Дешевле"],["rating","По рейтингу"],["new","Новые"]].map(o=>`<option value="${o[0]}" ${S.sort===o[0]?"selected":""}>${o[1]}</option>`).join("")}</select></div>`+L.map(card).join("")}
 function list(){const g=S.gi!=null?GR[S.gi]:null,subs=g?g[3].filter(s=>S.masters.some(m=>m.slug===s[0])):[];
@@ -302,7 +303,7 @@ function mform(x){
  <label class="lb">О себе (до 300 символов)</label><textarea id="fx" rows="3" maxlength="300">${esc(x?x.desc:"")}</textarea>
  <label class="lb">Опыт, лет</label><input id="fe" type="number" min="0" max="60" inputmode="numeric" value="${x&&x.exp?x.exp:""}">
  <label class="lb">Фото работ (до 10)</label><div class="th" id="fk"></div><input id="fw" type="file" accept="image/*" multiple></details>
- <button class="btn" id="fgo" style="margin-top:8px">${x?"Сохранить":"Отправить на проверку"}</button>`);
+ <p class="mu" style="margin:10px 2px 0;font-size:12px">Отправляя анкету, вы подтверждаете, что сведения верны, а за свои услуги вы отвечаете сами. Приложение это каталог, а не сторона сделки. Анкеты проверяются вручную.</p><button class="btn" id="fgo" style="margin-top:8px">${x?"Сохранить":"Отправить на проверку"}</button>`);
  const q=s=>e.querySelector(s);
  const pvTxt=r=>{const p=parseInt(String(r.p).replace(/\D/g,""))||0;return p?`Клиент увидит: <b>${r.f?"от ":""}${fmt(p)}</b>`:"Введите цену"};
  const drawR=()=>{q("#fr").innerHTML=rows.map((r,i)=>`<div class="svr"><input data-i="${i}" data-f="n" maxlength="60" placeholder="Услуга, например: Стрижка" value="${esc(r.n)}"><button type="button" class="ib" data-d="${i}" aria-label="Удалить">${lu("x")}</button><div class="pw"><input data-i="${i}" data-f="p" inputmode="numeric" placeholder="Цена, ₫" value="${esc(r.p)}"><div class="seg" role="group" aria-label="Тип цены"><button type="button" data-o="${i}" data-v="0" class="${r.f?"":"on"}">Точная цена</button><button type="button" data-o="${i}" data-v="1" class="${r.f?"on":""}">Цена «от»</button></div><div class="pv" data-i="${i}">${pvTxt(r)}</div></div></div>`).join("")};
@@ -321,7 +322,7 @@ function mform(x){
   try{if(!x&&tg&&tg.requestWriteAccess)tg.requestWriteAccess()}catch(_){}
   const r=await api(x?"update":"apply",{id:x&&x.id,master:{name:q("#fn").value.trim(),sub:q("#fs").value,district:q("#fd").value,services:sv,descr:q("#fx").value.trim(),exp:q("#fe").value,keep,photos:pd,avatar:ad,avatarClear:clr}});
   if(r.error){b.disabled=false;b.textContent=x?"Сохранить":"Отправить на проверку";return toast(r.error,1)}
-  e.remove();await load();toast(x?"Сохранено":r.status==="approved"?"Анкета опубликована":"Отправлено на проверку. Мы сообщим в Telegram")}}
+  e.remove();await load();toast(x?(r.status==="pending"?"Сохранено. Анкета снова на проверке, мы сообщим в Telegram":"Сохранено"):r.status==="approved"?"Анкета опубликована":"Отправлено на проверку. Мы сообщим в Telegram")}}
 function reviewForm(m){let rt=5;const e=sheet(`<h3>Отзыв о мастере</h3><p class="mu" style="margin:0 0 6px">Отзыв будет опубликован от вашего имени в Telegram.</p><div class="stars" id="st">${[1,2,3,4,5].map(i=>`<button type="button" class="on" data-i="${i}">★</button>`).join("")}</div><textarea id="rt" rows="3" maxlength="600" placeholder="Что вам понравилось?"></textarea><button class="btn" id="go">Отправить</button>`);
  e.querySelector("#st").onclick=ev=>{const b=ev.target.closest("[data-i]");if(!b)return;rt=+b.dataset.i;e.querySelectorAll("#st button").forEach(x=>x.classList.toggle("on",+x.dataset.i<=rt))};
  e.querySelector("#go").onclick=async()=>{const t=e.querySelector("#rt").value.trim();if(t.length<3)return toast("Напишите пару слов",1);if(m.demo){(S.revs[m.k]=S.revs[m.k]||[]).unshift({id:0,master_key:m.k,name:"Вы",rating:rt,text:t,created_at:new Date().toISOString()});e.remove();render();return toast("Спасибо за отзыв!")}const r=await api("review",{master_key:m.k,rating:rt,text:t});if(r.error)return toast(r.error,1);e.remove();await load();toast("Спасибо за отзыв!")}}
